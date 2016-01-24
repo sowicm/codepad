@@ -11,6 +11,10 @@ else ( UNIX AND NOT APPLE )
     find_package(wxWidgets REQUIRED)
 endif ( UNIX OR MINGW AND NOT APPLE )
 
+if (APPLE)
+    find_package(wxWidgets COMPONENTS std stc aui REQUIRED)
+endif (APPLE)
+
 # we need wxWidgets flags to be set only for the c++ files, so we do it like this
 # by setting the CMAKE_CXX_FLAGS
 if ( NOT MINGW )
