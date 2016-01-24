@@ -898,10 +898,10 @@ void clMainFrame::Initialize(bool loadLastSession)
     }
     inf.SetFrameSize(frameSize);
 
-#ifdef __WXOSX__
-    inf.SetFramePosition(wxPoint(30, 100));
-    inf.SetFrameSize(wxSize(600, 400));
-#endif
+//#ifdef __WXOSX__
+//    inf.SetFramePosition(wxPoint(30, 100));
+//    inf.SetFrameSize(wxSize(600, 400));
+//#endif
 
     m_theFrame = new clMainFrame(NULL, wxID_ANY, title, inf.GetFramePosition(), inf.GetFrameSize(),
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE);
