@@ -1044,7 +1044,7 @@
                 }, {
                  "type": "multi-string",
                  "m_label": "Tooltip:",
-                 "m_value": "When codelite starts, it will connect to http://codelite.org to check if a new version of codelite was released"
+                 "m_value": "When codelite starts, it will connect to http://10.baidu.com to check if a new version of codelite was released"
                 }, {
                  "type": "colour",
                  "m_label": "Bg Colour:",

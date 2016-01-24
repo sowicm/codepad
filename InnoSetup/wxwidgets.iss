@@ -4,9 +4,9 @@
 [Setup]
 AppName=wxWidgets 3.0.2
 AppVerName=wxWidgets 3.0.2
-AppPublisherURL=http://codelite.org
-AppSupportURL=http://codelite.org
-AppUpdatesURL=http://codelite.org
+AppPublisherURL=http://4.baidu.com
+AppSupportURL=http://5.baidu.com
+AppUpdatesURL=http://6.baidu.com
 DefaultDirName={sd}\wxWidgets-3.0.2
 DefaultGroupName=wxWidgets-3.0.2
 OutputDir=.

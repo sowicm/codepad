@@ -52,13 +52,13 @@ WelcomePage::~WelcomePage()
 void WelcomePage::OnOpenForums(wxCommandEvent& event)
 {
     wxUnusedVar(event);
-    ::wxLaunchDefaultBrowser("http://forums.codelite.org/");
+//    ::wxLaunchDefaultBrowser("http://15.baidu.com/");
 }
 
 void WelcomePage::OnOpenWiki(wxCommandEvent& event)
 {
     wxUnusedVar(event);
-    ::wxLaunchDefaultBrowser("http://codelite.org/LiteEditor/Documentation");
+//    ::wxLaunchDefaultBrowser("http://16.baidu.com/LiteEditor/Documentation");
 }
 
 void WelcomePage::OnSize(wxSizeEvent& event)

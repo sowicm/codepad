@@ -81,13 +81,15 @@ WebUpdateJob::~WebUpdateJob() {}
 
 void WebUpdateJob::Process(wxThread* thread)
 {
+    return;
+
 #ifndef __WXMSW__
     wxFileName fn(wxT("/tmp/codelite-packages.json"));
     wxString command;
 #ifdef __WXMAC__
-    command << wxT("curl http://codelite.org/packages.json  --output ") << fn.GetFullPath() << wxT(" > /dev/null 2>&1");
+    command << wxT("curl http://14.baidu.com/packages.json  --output ") << fn.GetFullPath() << wxT(" > /dev/null 2>&1");
 #else
-    command << "wget http://codelite.org/packages.json --output-file=/dev/null -O " << fn.GetFullPath()
+    command << "wget http://14.baidu.com/packages.json --output-file=/dev/null -O " << fn.GetFullPath()
             << wxT(" > /dev/null 2>&1");
 #endif
     {
@@ -111,7 +113,7 @@ void WebUpdateJob::Process(wxThread* thread)
     }
 
 #else
-    wxURL url(wxT("http://codelite.org/packages.json"));
+    wxURL url(wxT("http://31.baidu.com/packages.json"));
     if(url.GetError() == wxURL_NOERR) {
 
         wxInputStream* in_stream = url.GetInputStream();
@@ -177,7 +179,7 @@ void WebUpdateJob::ParseFile()
         if(v.IsNewer(os, codename, arch)) {
             wxCommandEvent event(wxEVT_CMD_NEW_VERSION_AVAILABLE);
             event.SetClientData(
-                new WebUpdateJobData("http://codelite.org/support.php", v.GetUrl(), CODELITE_VERSION_STRING, "", false, true));
+                new WebUpdateJobData("http://31.baidu.com/support.php", v.GetUrl(), CODELITE_VERSION_STRING, "", false, true));
             m_parent->AddPendingEvent(event);
             return;
         }

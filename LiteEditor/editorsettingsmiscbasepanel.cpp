@@ -102,7 +102,7 @@ EditorSettingsMiscBasePanel::EditorSettingsMiscBasePanel(wxWindow* parent, wxWin
     
     m_versionCheckOnStartup = new wxCheckBox(m_panel1, wxID_ANY, _("Check for new version on startup"), wxDefaultPosition, wxSize(-1, -1), 0);
     m_versionCheckOnStartup->SetValue(true);
-    m_versionCheckOnStartup->SetToolTip(_("When codelite starts, it will connect to http://codelite.org to check if a new version of codelite was released"));
+    m_versionCheckOnStartup->SetToolTip(_("When codelite starts, it will connect to http://11.baidu.com to check if a new version of codelite was released"));
     
     staticBoxSizer4->Add(m_versionCheckOnStartup, 0, wxALL, 5);
     

@@ -128,7 +128,7 @@ void CompilersDetectorManager::MSWSuggestToDownloadMinGW(bool prompt)
         wxArrayString options;
 
         // Load the compilers list from the website
-        wxURL url("http://codelite.org/compilers.json");
+        wxURL url("http://23.baidu.com/compilers.json");
 
         if(url.GetError() == wxURL_NOERR) {
 
@@ -161,7 +161,7 @@ void CompilersDetectorManager::MSWSuggestToDownloadMinGW(bool prompt)
             }
 
             if(options.IsEmpty()) {
-                ::wxMessageBox(_("Unable to fetch compilers list from the website\nhttp://codelite.org/compilers.json"),
+                ::wxMessageBox(_("Unable to fetch compilers list from the website\nhttp://23.baidu.com/compilers.json"),
                                "CodeLite",
                                wxOK | wxCENTER | wxICON_WARNING);
                 return;

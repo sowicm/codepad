@@ -40,7 +40,7 @@ HelpPluginMessageBaseDlg::HelpPluginMessageBaseDlg(wxWindow* parent, wxWindowID 
     
     flexGridSizer12->Add(m_staticText, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
     
-    m_hyperLink = new wxHyperlinkCtrl(this, wxID_ANY, _("Download Zeal"), wxT("http://www.codelite.org"), wxDefaultPosition, wxSize(-1,-1), wxHL_DEFAULT_STYLE);
+    m_hyperLink = new wxHyperlinkCtrl(this, wxID_ANY, _("Download Zeal"), wxT("http://3.baidu.com"), wxDefaultPosition, wxSize(-1,-1), wxHL_DEFAULT_STYLE);
     m_hyperLink->SetNormalColour(wxColour(wxT("#0000FF")));
     m_hyperLink->SetHoverColour(wxColour(wxT("#0000FF")));
     m_hyperLink->SetVisitedColour(wxColour(wxT("#FF0000")));

@@ -1,6 +1,6 @@
 <?php
 
-const BASE_URL = "http://codelite.org";
+const BASE_URL = "http://baidu.com";
 $NAME = "Eran Ifrah";
 class PageRenderer
 {

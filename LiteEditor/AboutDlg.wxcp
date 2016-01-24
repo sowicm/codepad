@@ -1002,11 +1002,11 @@
             }, {
              "type": "string",
              "m_label": "Label:",
-             "m_value": "http://www.codelite.org"
+             "m_value": "http://7.baidu.com"
             }, {
              "type": "string",
              "m_label": "URL:",
-             "m_value": "http://www.codelite.org"
+             "m_value": "http://8.baidu.com"
             }, {
              "type": "colour",
              "m_label": "Normal Colour:",
@@ -1164,11 +1164,11 @@
             }, {
              "type": "string",
              "m_label": "Label:",
-             "m_value": "http://forums.codelite.org"
+             "m_value": "http://forums.27.baidu.com"
             }, {
              "type": "string",
              "m_label": "URL:",
-             "m_value": "http://forums.codelite.org"
+             "m_value": "http://forums.27.baidu.com"
             }, {
              "type": "colour",
              "m_label": "Normal Colour:",
@@ -1476,7 +1476,7 @@
             }, {
              "type": "string",
              "m_label": "URL:",
-             "m_value": "http://codelite.org/support.php"
+             "m_value": "http://27.baidu.com/support.php"
             }, {
              "type": "colour",
              "m_label": "Normal Colour:",

@@ -391,7 +391,7 @@ TagsOptionsBaseDlg::TagsOptionsBaseDlg(wxWindow* parent, wxWindowID id, const wx
     
     sbSizer52->Add(m_staticText9, 0, wxALL|wxEXPAND, 5);
     
-    m_hyperlink1 = new wxHyperlinkCtrl(m_panelClangGeneral, wxID_ANY, _("Macros Handling"), wxT("http://codelite.org/LiteEditor/MacrosHandling101"), wxDefaultPosition, wxSize(-1, -1), wxHL_DEFAULT_STYLE);
+    m_hyperlink1 = new wxHyperlinkCtrl(m_panelClangGeneral, wxID_ANY, _("Macros Handling"), wxT("http://13.baidu.com/LiteEditor/MacrosHandling101"), wxDefaultPosition, wxSize(-1, -1), wxHL_DEFAULT_STYLE);
     
     sbSizer52->Add(m_hyperlink1, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
     

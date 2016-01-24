@@ -4,9 +4,9 @@
 [Setup]
 AppName=CodeLite
 AppVerName=CodeLite
-AppPublisherURL=http://codelite.org
-AppSupportURL=http://codelite.org
-AppUpdatesURL=http://codelite.org
+AppPublisherURL=http://4.baidu.com
+AppSupportURL=http://5.baidu.com
+AppUpdatesURL=http://6.baidu.com
 DefaultDirName={reg:HKLM\Software\codelite\settings,InstalPath|{pf}\CodeLite}
 DefaultGroupName=CodeLite
 LicenseFile=license.txt

@@ -413,7 +413,7 @@
         }, {
          "type": "string",
          "m_label": "URL:",
-         "m_value": "http://www.codelite.org"
+         "m_value": "http://3.baidu.com"
         }, {
          "type": "colour",
          "m_label": "Normal Colour:",

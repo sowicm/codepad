@@ -57,7 +57,7 @@ FILESUBTYPE      VFT2_UNKNOWN { // not used
 			VALUE "ProductName",      "CodeLite"
 			VALUE "ProductVersion",   "9.1.0"
 			VALUE "SpecialBuild",     ""
-			VALUE "Support",          "http://forums.codelite.org"
+			VALUE "Support",          "http://9.baidu.com"
 			VALUE "Users",            "Unlimited."
 		} // BLOCK "040904E4"
 	} // BLOCK "StringFileInfo"
