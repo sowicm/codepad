@@ -25,6 +25,8 @@
 #include "sessionmanager.h"
 #include "xmlutils.h"
 #include "wx/ffile.h"
+#include "wx/jsonreader.h"
+#include "wx/jsonwriter.h"
 #include <wx/log.h>
 
 #include <memory>
@@ -36,34 +38,46 @@ SessionEntry::SessionEntry() {}
 
 SessionEntry::~SessionEntry() {}
 
-void SessionEntry::DeSerialize(Archive& arch)
+void SessionEntry::DeSerialize(wxJSONValue& root)
 {
-    arch.Read(wxT("m_selectedTab"), m_selectedTab);
-    arch.Read(wxT("m_tabs"), m_tabs);
-    arch.Read(wxT("m_workspaceName"), m_workspaceName);
-    arch.Read(wxT("TabInfoArray"), m_vTabInfoArr);
-    arch.Read(wxT("m_breakpoints"), (SerializedObject*)&m_breakpoints);
-    // initialize tab info array from m_tabs if in config file wasn't yet tab info array
-    if(m_vTabInfoArr.size() == 0 && m_tabs.GetCount() > 0) {
-        for(size_t i = 0; i < m_tabs.GetCount(); i++) {
-            TabInfo oTabInfo;
-            oTabInfo.SetFileName(m_tabs.Item(i));
-            oTabInfo.SetFirstVisibleLine(0);
-            oTabInfo.SetCurrentLine(0);
-            m_vTabInfoArr.push_back(oTabInfo);
-        }
+    m_selectedTab = root["selected_tab"].AsInt();
+/*    wxJSONValue tabs = root["tabs"];
+    m_tabs.Clear();
+    for (int i = 0; i < tabs.Size(); ++i)
+    {
+        m_tabs.Add(tabs[i].AsString());
     }
+*/
+    m_workspaceName = root["workspace"]["name"].AsString();
+
+    wxJSONValue buffers = root["buffers"];
+    m_vTabInfoArr.clear();
+    for (int i = 0; i < buffers.Size(); ++i)
+    {
+        TabInfo oTabInfo;
+        oTabInfo.SetFileName(buffers[i]["file"].AsString());
+        oTabInfo.SetFirstVisibleLine(buffers[i]["first_visible_line"].AsInt());
+        oTabInfo.SetCurrentLine(buffers[i]["current_line"].AsInt());
+        //oTabInfo.m_bookmarks
+        //oTabInfo.m_folds (collapsedfolds)
+        m_vTabInfoArr.push_back(oTabInfo);
+    }
+
+//    arch.Read(wxT("m_breakpoints"), (SerializedObject*)&m_breakpoints);
 }
 
-void SessionEntry::Serialize(Archive& arch)
+void SessionEntry::Serialize(wxJSONValue& root)
 {
-    arch.Write(wxT("m_selectedTab"), m_selectedTab);
-    // since tabs are saved in TabInfoArray we don't save tabs as string array,
-    // there are only read due to read config saved in older version where wasn't TabInfoArray
-    // arch.Write(wxT("m_tabs"), m_tabs);
-    arch.Write(wxT("m_workspaceName"), m_workspaceName);
-    arch.Write(wxT("TabInfoArray"), m_vTabInfoArr);
-    arch.Write(wxT("m_breakpoints"), (SerializedObject*)&m_breakpoints);
+    root["selected_tab"] = m_selectedTab;
+    root["workspace"]["name"] = m_workspaceName;
+    for (size_t i = 0; i < m_vTabInfoArr.size(); i++)
+    {
+        TabInfo& oTabInfo = m_vTabInfoArr[i];
+        root["buffers"][i]["file"] = oTabInfo.GetFileName();
+        root["buffers"][i]["first_visible_line"] = oTabInfo.GetFirstVisibleLine();
+        root["buffers"][i]["current_line"] = oTabInfo.GetCurrentLine();
+    }
+   // arch.Write(wxT("m_breakpoints"), (SerializedObject*)&m_breakpoints);
 }
 
 //---------------------------------------------
@@ -96,15 +110,19 @@ bool SessionManager::Load(const wxString& fileName)
     m_fileName = wxFileName(fileName);
 
     if(!m_fileName.FileExists()) {
-        // no such file or directory
-        // create an empty one
-        wxFFile newFile(fileName, wxT("a+"));
-        newFile.Write(wxT("<Sessions/>"));
-        newFile.Close();
+        return true;
     }
 
-    m_doc.Load(m_fileName.GetFullPath());
-    return m_doc.IsOk();
+    wxJSONReader reader;
+    wxString content;
+    wxFFile fp(m_fileName.GetFullPath(), wxT("rb"));
+    if (!fp.IsOpened())
+        return false;
+    if (!fp.ReadAll(&content, wxConvUTF8))
+        return false;
+    if (reader.Parse(content, &m_json) > 0)
+        return false;
+    return true;
 }
 
 wxFileName SessionManager::GetSessionFileName(const wxString& name, const wxString& suffix /*=wxT("")*/) const
@@ -129,25 +147,34 @@ bool SessionManager::GetSession(const wxString& workspaceFile,
                                 const wxString& suffix,
                                 const wxChar* Tag)
 {
-    if(!m_doc.GetRoot()) {
-        return false;
-    }
-
     wxFileName sessionFileName = GetSessionFileName(workspaceFile, suffix);
     wxXmlDocument doc;
-    
-    if(sessionFileName.FileExists()) {
-        if(!doc.Load(sessionFileName.GetFullPath()) || !doc.IsOk()) return false;
+    wxJSONValue root;
+    wxJSONReader reader;
+
+    if (sessionFileName.FileExists()) {
+        wxString content;
+        wxFFile fp(sessionFileName.GetFullPath(), wxT("rb"));
+        if (!fp.IsOpened())
+            return false;
+        if (!fp.ReadAll(&content, wxConvUTF8))
+            return false;
+        //if (reader.Parse(content.mb_str(wxConvUTF8).data(), root) > 0)
+        if (reader.Parse(content, &root) > 0)
+            return false;
     } else {
-        doc.SetRoot(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, Tag));
+        root["name"] = Tag;
+        //doc.SetRoot(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, Tag));
     }
 
-    wxXmlNode* const node = doc.GetRoot();
-    if(!node || node->GetName() != Tag) return false;
+    //wxXmlNode* const node = doc.GetRoot();
+    //if(!node || node->GetName() != Tag) return false;
+    if (root["name"].AsString() != Tag)
+        return false;
 
-    Archive arch;
-    arch.SetXmlNode(node);
-    session.DeSerialize(arch);
+//    Archive arch;
+//    arch.SetXmlNode(node);
+    session.DeSerialize(root);
 
     return true;
 }
@@ -157,70 +184,52 @@ bool SessionManager::Save(const wxString& name,
                           const wxString& suffix /*=wxT("")*/,
                           const wxChar* Tag /*=sessionTag*/)
 {
-    if(!m_doc.GetRoot()) {
-        return false;
-    }
-
     if(name.empty()) return false;
 
     std::auto_ptr<wxXmlNode> child(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, Tag));
     child->AddProperty(wxT("Name"), name);
 
-    Archive arch;
-    arch.SetXmlNode(child.get());
-    session.Serialize(arch);
-
-    wxXmlDocument doc;
-    doc.SetRoot(child.release());
+    //Archive arch;
+    //arch.SetXmlNode(child.get());
+    //session.Serialize(arch);
+    //
+    wxJSONWriter writer( wxJSONWRITER_STYLED | wxJSONWRITER_WRITE_COMMENTS );
+    session.Serialize(m_json);
+    wxString jsonText;
+    writer.Write(m_json, jsonText);
 
     // If we're saving a tabgroup, suffix will be ".tabgroup", not the default ".session"
     const wxFileName& sessionFileName = GetSessionFileName(name, suffix);
-    return doc.Save(sessionFileName.GetFullPath());
+
+    wxFFile fp(sessionFileName.GetFullPath(), wxT("wb"));
+    if (fp.IsOpened())
+    {
+        fp.Write(jsonText, wxConvUTF8);
+        fp.Close();
+        return true;
+    }
+
+    return false;
 }
 
 void SessionManager::SetLastSession(const wxString& name)
 {
-    if(!m_doc.GetRoot()) {
-        return;
+    m_json["last_session"] = name;
+    wxJSONWriter writer( wxJSONWRITER_STYLED | wxJSONWRITER_WRITE_COMMENTS );
+    wxString jsonText;
+    writer.Write(m_json, jsonText);
+    wxFFile fp(m_fileName.GetFullPath(), wxT("wb"));
+    if (fp.IsOpened())
+    {
+        fp.Write(jsonText, wxConvUTF8);
+        fp.Close();
     }
-    // first delete the old entry
-    wxXmlNode* node = m_doc.GetRoot()->GetChildren();
-    while(node) {
-        if(node->GetName() == wxT("LastSession")) {
-            m_doc.GetRoot()->RemoveChild(node);
-            delete node;
-            break;
-        }
-        node = node->GetNext();
-    }
-
-    // set new one
-    wxXmlNode* child = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, wxT("LastSession"));
-    m_doc.GetRoot()->AddChild(child);
-    XmlUtils::SetNodeContent(child, name);
-
-    // save changes
-    m_doc.Save(m_fileName.GetFullPath());
 }
 
 wxString SessionManager::GetLastSession()
 {
-    if(!m_doc.GetRoot()) {
+    if (m_json.HasMember("last_session") && m_json["last_session"].AsString().Length() > 0)
+        return m_json["last_session"].AsString();
+    else
         return defaultSessionName;
-    }
-    // try to locate the 'LastSession' entry
-    // if it does not exist or it exist with value empty return 'Default'
-    // otherwise, return its content
-    wxXmlNode* node = m_doc.GetRoot()->GetChildren();
-    while(node) {
-        if(node->GetName() == wxT("LastSession")) {
-            if(node->GetNodeContent().IsEmpty()) {
-                return defaultSessionName;
-            } else {
-                return node->GetNodeContent();
-            }
-        }
-        node = node->GetNext();
-    }
-    return defaultSessionName;
 }
