@@ -53,7 +53,8 @@ include_directories("${CL_SRC_ROOT}/sdk/wxsqlite3/include"
                     "${CL_SRC_ROOT}/sdk/codelite_indexer/network" 
                     "${CL_SRC_ROOT}/CodeLite" 
                     "${CL_SRC_ROOT}/PCH"
-                    "${CL_SRC_ROOT}/Interfaces")
+                    "${CL_SRC_ROOT}/Interfaces"
+                    "${CL_SRC_ROOT}/sdk/wxjson/include")
 
 set( ADDITIONAL_LIBRARIES "" )
 

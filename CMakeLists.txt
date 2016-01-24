@@ -504,6 +504,7 @@ add_subdirectory(sdk/databaselayer)
 add_subdirectory(CodeLite)
 add_subdirectory(Plugin)
 add_subdirectory(abbreviation)
+add_subdirectory(sdk/wxjson)
 
 if ( NOT NO_CPP_PLUGINS )
     add_subdirectory(CallGraph)
@@ -579,6 +580,7 @@ add_dependencies(databaselayersqlite wxsqlite3)
 add_dependencies(wxshapeframework wxsqlite3)
 add_dependencies(libcodelite wxshapeframework databaselayersqlite wxsqlite3)
 add_dependencies(plugin libcodelite)
+add_dependencies(plugin wxjson)
 add_dependencies(codelite plugin)
 
 ## Include our custom plugin.cmake module
