@@ -30,6 +30,7 @@
 #include "wx/xml/xml.h"
 #include <vector>
 #include "codelite_exports.h"
+#include "wx/jsonval.h"
 
 namespace
 {
@@ -71,8 +72,11 @@ public:
     SessionEntry();
     virtual ~SessionEntry();
 
-    void Serialize(Archive& arch);
-    void DeSerialize(Archive& arch);
+    void Serialize(wxJSONValue& root);
+    void DeSerialize(wxJSONValue& root);
+
+    void Serialize(Archive &arch){}
+    void DeSerialize(Archive &arch){}
 };
 
 /**
@@ -101,7 +105,7 @@ public:
  */
 class WXDLLIMPEXP_SDK SessionManager
 {
-    wxXmlDocument m_doc;
+    wxJSONValue m_json;
     wxFileName m_fileName;
 
 private:
