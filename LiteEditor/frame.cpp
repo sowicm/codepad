@@ -1058,20 +1058,21 @@ void clMainFrame::CreateGUIControls()
     m_mgr.AddPane(m_mainBook, wxAuiPaneInfo().Name(wxT("Editor")).CenterPane().PaneBorder(false));
     CreateRecentlyOpenedFilesMenu();
 
-    m_outputPane = new OutputPane(m_mainPanel, wxT("Output View"));
+    m_outputPane = new OutputPane(m_mainPanel, wxT("Output"));
     wxAuiPaneInfo paneInfo;
     m_mgr.AddPane(m_outputPane, paneInfo.CaptionVisible(true)
-                                    .PinButton()
-                                    .Name(wxT("Output View"))
-                                    .Caption(wxT("Output View"))
+                                    //.PinButton()
+                                    .Name(wxT("Output"))
+                                    .Caption(wxT("Output"))
                                     .Bottom()
                                     .Layer(1)
                                     .Position(0)
-                                    .MinimizeButton()
+                                    //.MinimizeButton()
                                     .Show()
                                     .BestSize(wxSize(400, 200))
-                                    .MaximizeButton());
-    RegisterDockWindow(XRCID("output_pane"), wxT("Output View"));
+                                    //.MaximizeButton());
+                                    );
+    RegisterDockWindow(XRCID("output_pane"), wxT("Output"));
 
     long show_nav = EditorConfigST::Get()->GetInteger(wxT("ShowNavBar"), 0);
     if(!show_nav) {
