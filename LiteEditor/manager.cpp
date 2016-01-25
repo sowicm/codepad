@@ -1756,7 +1756,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
 #endif
         ;
 
-        m_asyncExeCmd = new AsyncExeCmd(clMainFrame::Get()->GetOutputPane()->GetOutputWindow());
+        m_asyncExeCmd = new AsyncExeCmd(clMainFrame::Get()->GetOutputPane()->GetBuildTab());
 
         execLine = strExe;
         m_asyncExeCmd->Execute(execLine, false, false);
