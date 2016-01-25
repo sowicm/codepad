@@ -114,9 +114,17 @@ protected:
     PerspectiveManager m_perspectiveManager;
     clDebuggerTerminalPOSIX m_debuggerTerminal;
 
+    wxString m_filename;
+
 protected:
     Manager(void);
     virtual ~Manager(void);
+
+public:
+    void filename(const wxString& _filename)
+    {
+        m_filename = _filename;
+    }
 
     //--------------------------- Global State -----------------------------
 public:

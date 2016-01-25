@@ -2854,6 +2854,41 @@ void clMainFrame::OnExecuteNoDebug(wxCommandEvent& event)
     if(EventNotifier::Get()->ProcessEvent(evtExecute)) return;
 
     if(!clCxxWorkspaceST::Get()->IsOpen()) {
+
+    	try
+    	{
+    		LEditor* editor = GetMainBook()->GetActiveEditor();
+    		// todo: untitled
+		    // Prepare the commands to execute
+		    ManagerST::Get()->filename(editor->GetFileName().GetFullPath());
+		    QueueCommand commandExecute(QueueCommand::kExecuteNoDebug);
+	        QueueCommand buildCommand(QueueCommand::kBuild);
+	        ManagerST::Get()->PushQueueCommand(buildCommand);
+	        commandExecute.SetCheckBuildSuccess(true); // execute only if build was successfull
+	        ManagerST::Get()->PushQueueCommand(commandExecute);
+	        ManagerST::Get()->ProcessCommandQueue();
+	        ManagerST::Get()->ProcessCommandQueue();
+	        ManagerST::Get()->filename(wxEmptyString);
+    	}
+    	catch (char* str)
+    	{
+	        wxMessageBox(_(str), "error", wxOK, this);
+    	}
+    	catch (const char* str)
+    	{
+	        wxMessageBox(_(str), "error", wxOK, this);
+    	}
+    	catch (const wxString& str)
+    	{
+    		wxMessageBox(str, "error", wxOK, this);
+    	}
+    	catch (...)
+    	{
+	        wxMessageBox(_("Wrong Type"), "error type", wxOK, this);
+
+    	}
+
+
         return;
     }
 
@@ -2878,10 +2913,10 @@ void clMainFrame::OnExecuteNoDebug(wxCommandEvent& event)
 void clMainFrame::OnExecuteNoDebugUI(wxUpdateUIEvent& event)
 {
     CHECK_SHUTDOWN();
-    if(!clWorkspaceManager::Get().GetWorkspace()) {
-        event.Enable(false);
-        return;
-    }
+    //if(!clWorkspaceManager::Get().GetWorkspace()) {
+    //    event.Enable(false);
+    //    return;
+    //}
 
     clExecuteEvent e(wxEVT_CMD_IS_PROGRAM_RUNNING, GetId());
     e.SetEventObject(this);

@@ -73,6 +73,61 @@ void CompileRequest::Process(IManager* manager)
     ProjectPtr proj = w->FindProjectByName(m_info.GetProject(), errMsg);
     if(!proj) {
         AppendLine(_("Cant find project: ") + m_info.GetProject());
+
+        BuilderPtr builder = bm->GetSelectedBuilder();
+
+        cmd = m_preprocessOnly ?
+                  builder->GetPreprocessFileCmd(m_info.GetProject(), m_info.GetConfiguration(), m_fileName, errMsg) :
+                  builder->GetSingleFileCmd(m_info.GetProject(), m_info.GetConfiguration(), m_fileName);
+
+        clBuildEvent event(wxEVT_BUILD_STARTING);
+        //event.SetProjectName(pname);
+        //event.SetConfigurationName(m_info.GetConfiguration());
+
+        if(EventNotifier::Get()->ProcessEvent(event)) {
+
+            // the build is being handled by some plugin, no need to build it
+            // using the standard way
+            throw "plugin handled";
+            return;
+        }
+
+        // Send the EVENT_STARTED : even if this event is sent, next event will
+        // be post, so no way to be sure the the build process has not started
+        SendStartMsg();
+
+        int i = m_fileName.Find('.', true);
+        wxString strExe = (i < 0 ? m_fileName : m_fileName.Mid(0, i));
+#if IS_WINDOWS
+        strExe += _T(".exe");
+#endif
+
+        cmd = _("gcc \"") + m_fileName + _T("\" -o \"" ) + strExe + _T("\"");
+/*
+        WrapInShell(cmd);
+        DirSaver ds;
+
+        DoSetWorkingDirectory(proj, false, m_fileName.IsEmpty() == false);
+
+        // expand the variables of the command
+        //cmd = ExpandAllVariables(cmd, w, m_info.GetProject(), m_info.GetConfiguration(), m_fileName);
+
+        // print the build command
+        AppendLine(cmd + wxT("\n"));
+
+        // Avoid Unicode chars coming from the compiler by setting LC_ALL to "C"
+        om["LC_ALL"] = "C";
+        
+        EnvSetter envir(env, &om, proj->GetName(), m_info.GetConfiguration());*/
+        m_proc = CreateAsyncProcess(this, cmd);
+        if(!m_proc) {
+            throw "error";
+            wxString message;
+            message << _("Failed to start build process, command: ") << cmd << _(", process terminated with exit code: 0");
+            AppendLine(message);
+            return;
+        }
+
         return;
     }
 

@@ -1745,9 +1745,33 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
         return;
     }
     wxString wd;
+    wxString execLine;
+
+    if (m_filename.Length() > 0)
+    {
+        int i = m_filename.Find('.', true);
+        wxString strExe = (i < 0 ? m_filename : m_filename.Mid(0, i))
+#if IS_WINDOWS
+        + _T(".exe")
+#endif
+        ;
+
+        m_asyncExeCmd = new AsyncExeCmd(clMainFrame::Get()->GetOutputPane()->GetOutputWindow());
+
+        execLine = strExe;
+        m_asyncExeCmd->Execute(execLine, false, false);
+
+
+        if(m_asyncExeCmd->GetProcess()) {
+            m_asyncExeCmd->GetProcess()->Connect(
+                wxEVT_END_PROCESS, wxProcessEventHandler(Manager::OnProcessEnd), NULL, this);
+        }
+
+
+        return;
+    }
 
     // we call it here once for the 'wd'
-    wxString execLine;
     ProjectPtr proj;
 
     {
@@ -2892,8 +2916,17 @@ void Manager::DoBuildProject(const QueueCommand& buildInfo)
         delete m_shellProcess;
     }
 
-    m_shellProcess = new CompileRequest(buildInfo);
-    m_shellProcess->Process(PluginManager::Get());
+    if (m_filename.Length() > 0)
+    {
+        m_shellProcess = new CompileRequest(buildInfo, m_filename);
+        m_shellProcess->Process(PluginManager::Get());
+        //m_filename.Clear();
+    }
+    else
+    {
+        m_shellProcess = new CompileRequest(buildInfo);
+        m_shellProcess->Process(PluginManager::Get());
+    }
 }
 
 void Manager::DoCleanProject(const QueueCommand& buildInfo)
