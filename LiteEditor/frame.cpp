@@ -1023,6 +1023,7 @@ void clMainFrame::CreateGUIControls()
 
     // Add the explorer pane
     m_workspacePane = new WorkspacePane(m_mainPanel, wxT("Workspace View"), &m_mgr);
+    /*
     m_mgr.AddPane(m_workspacePane, wxAuiPaneInfo()
                                        .PinButton()
                                        .CaptionVisible(true)
@@ -1035,6 +1036,7 @@ void clMainFrame::CreateGUIControls()
                                        .Layer(1)
                                        .Position(0)
                                        .CloseButton(true));
+    */
     RegisterDockWindow(XRCID("workspace_pane"), wxT("Workspace View"));
 
     // add the debugger locals tree, make it hidden by default
@@ -3239,6 +3241,7 @@ void clMainFrame::OnBackwardForwardUI(wxUpdateUIEvent& event)
 
 void clMainFrame::CreateWelcomePage()
 {
+	return;
     /*
     Manager *mgr = ManagerST::Get();
     //load the template
