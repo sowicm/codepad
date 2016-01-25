@@ -72,7 +72,10 @@ void CompileRequest::Process(IManager* manager)
 
     ProjectPtr proj = w->FindProjectByName(m_info.GetProject(), errMsg);
     if(!proj) {
-        AppendLine(_("Cant find project: ") + m_info.GetProject());
+        wxString text;
+        text << wxT("-----") << wxT("已启动生成: ") << m_fileName << wxT("-----\n");
+        AppendLine(text);
+
 
         BuilderPtr builder = bm->GetSelectedBuilder();
 
@@ -88,7 +91,6 @@ void CompileRequest::Process(IManager* manager)
 
             // the build is being handled by some plugin, no need to build it
             // using the standard way
-            throw "plugin handled";
             return;
         }
 
@@ -111,17 +113,16 @@ void CompileRequest::Process(IManager* manager)
 
         // expand the variables of the command
         //cmd = ExpandAllVariables(cmd, w, m_info.GetProject(), m_info.GetConfiguration(), m_fileName);
-
+*/
         // print the build command
         AppendLine(cmd + wxT("\n"));
 
         // Avoid Unicode chars coming from the compiler by setting LC_ALL to "C"
-        om["LC_ALL"] = "C";
-        
-        EnvSetter envir(env, &om, proj->GetName(), m_info.GetConfiguration());*/
+//        om["LC_ALL"] = "C";
+
+//        EnvSetter envir(env, &om, proj->GetName(), m_info.GetConfiguration());*/
         m_proc = CreateAsyncProcess(this, cmd);
         if(!m_proc) {
-            throw "error";
             wxString message;
             message << _("Failed to start build process, command: ") << cmd << _(", process terminated with exit code: 0");
             AppendLine(message);
