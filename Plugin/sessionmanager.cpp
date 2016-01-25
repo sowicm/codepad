@@ -186,17 +186,11 @@ bool SessionManager::Save(const wxString& name,
 {
     if(name.empty()) return false;
 
-    std::auto_ptr<wxXmlNode> child(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, Tag));
-    child->AddProperty(wxT("Name"), name);
-
-    //Archive arch;
-    //arch.SetXmlNode(child.get());
-    //session.Serialize(arch);
-    //
+    wxJSONValue root;
     wxJSONWriter writer( wxJSONWRITER_STYLED | wxJSONWRITER_WRITE_COMMENTS );
-    session.Serialize(m_json);
+    session.Serialize(root);
     wxString jsonText;
-    writer.Write(m_json, jsonText);
+    writer.Write(root, jsonText);
 
     // If we're saving a tabgroup, suffix will be ".tabgroup", not the default ".session"
     const wxFileName& sessionFileName = GetSessionFileName(name, suffix);
