@@ -104,8 +104,6 @@ void OutputPane::CreateGUIControls()
 #endif
     }
     style |= kNotebook_UnderlineActiveTab;
-
-    style |= kNotebook_HideTabs;
     
     m_book = new Notebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
 
@@ -130,7 +128,7 @@ void OutputPane::CreateGUIControls()
 
     // Find in files
     m_findResultsTab = new FindResultsTab(m_book, wxID_ANY, wxGetTranslation(FIND_IN_FILES_WIN));
-    //m_book->AddPage(m_findResultsTab, wxGetTranslation(FIND_IN_FILES_WIN), false, bmpLoader->LoadBitmap(wxT("find")));
+    m_book->AddPage(m_findResultsTab, wxGetTranslation(FIND_IN_FILES_WIN), false, bmpLoader->LoadBitmap(wxT("find")));
     m_tabs.insert(
         std::make_pair(wxGetTranslation(FIND_IN_FILES_WIN),
                        Tab(wxGetTranslation(FIND_IN_FILES_WIN), m_findResultsTab, bmpLoader->LoadBitmap(wxT("find")))));
@@ -138,15 +136,15 @@ void OutputPane::CreateGUIControls()
 
     // Replace In Files
     m_replaceResultsTab = new ReplaceInFilesPanel(m_book, wxID_ANY, wxGetTranslation(REPLACE_IN_FILES));
-    //m_book->AddPage(
-    //    m_replaceResultsTab, wxGetTranslation(REPLACE_IN_FILES), false, bmpLoader->LoadBitmap(wxT("find_and_replace")));
+    m_book->AddPage(
+        m_replaceResultsTab, wxGetTranslation(REPLACE_IN_FILES), false, bmpLoader->LoadBitmap(wxT("find_and_replace")));
     m_tabs.insert(std::make_pair(
         REPLACE_IN_FILES, Tab(REPLACE_IN_FILES, m_replaceResultsTab, bmpLoader->LoadBitmap(wxT("find_and_replace")))));
     mgr->AddOutputTab(REPLACE_IN_FILES);
 
     // Show Usage ("References")
     m_showUsageTab = new FindUsageTab(m_book, wxGetTranslation(SHOW_USAGE));
-    //m_book->AddPage(m_showUsageTab, wxGetTranslation(SHOW_USAGE), false, bmpLoader->LoadBitmap(wxT("find")));
+    m_book->AddPage(m_showUsageTab, wxGetTranslation(SHOW_USAGE), false, bmpLoader->LoadBitmap(wxT("find")));
     m_tabs.insert(
         std::make_pair(wxGetTranslation(SHOW_USAGE),
                        Tab(wxGetTranslation(SHOW_USAGE), m_showUsageTab, bmpLoader->LoadBitmap(wxT("find")))));
@@ -154,7 +152,7 @@ void OutputPane::CreateGUIControls()
 
     // Output tab
     m_outputWind = new OutputTab(m_book, wxID_ANY, wxGetTranslation(OUTPUT_WIN));
-    //m_book->AddPage(m_outputWind, wxGetTranslation(OUTPUT_WIN), false, bmpLoader->LoadBitmap(wxT("console")));
+    m_book->AddPage(m_outputWind, wxGetTranslation(OUTPUT_WIN), false, bmpLoader->LoadBitmap(wxT("console")));
     m_tabs.insert(
         std::make_pair(wxGetTranslation(OUTPUT_WIN),
                        Tab(wxGetTranslation(OUTPUT_WIN), m_outputWind, bmpLoader->LoadBitmap(wxT("console")))));
@@ -181,7 +179,7 @@ void OutputPane::CreateGUIControls()
     // Set the trace's font & colors
     /////////////////////////////////////
 
-    //m_book->AddPage(text, wxGetTranslation(TRACE_TAB), false, bmpLoader->LoadBitmap("log"));
+    m_book->AddPage(text, wxGetTranslation(TRACE_TAB), false, bmpLoader->LoadBitmap("log"));
     m_logTargetOld = wxLog::SetActiveTarget(new wxclTextCtrl(text));
     m_tabs.insert(std::make_pair(wxGetTranslation(TRACE_TAB),
                                  Tab(wxGetTranslation(TRACE_TAB), text, bmpLoader->LoadBitmap("log"))));
@@ -192,7 +190,7 @@ void OutputPane::CreateGUIControls()
 
     // Tasks panel
     m_taskPanel = new TaskPanel(m_book, wxID_ANY, wxGetTranslation(TASKS));
-    //m_book->AddPage(m_taskPanel, wxGetTranslation(TASKS), false, bmpLoader->LoadBitmap("tasks"));
+    m_book->AddPage(m_taskPanel, wxGetTranslation(TASKS), false, bmpLoader->LoadBitmap("tasks"));
     m_tabs.insert(std::make_pair(wxGetTranslation(TASKS),
                                  Tab(wxGetTranslation(TASKS), m_taskPanel, bmpLoader->LoadBitmap("tasks"))));
     mgr->AddOutputTab(wxGetTranslation(TASKS));
