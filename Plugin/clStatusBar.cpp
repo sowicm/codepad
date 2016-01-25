@@ -15,11 +15,12 @@
 #include "globals.h"
 #include <wx/menu.h>
 
-#define STATUSBAR_LINE_COL_IDX 0
-#define STATUSBAR_ANIMATION_COL_IDX 1
-#define STATUSBAR_WHITESPACE_INFO_IDX 2
-#define STATUSBAR_LANG_COL_IDX 3
-#define STATUSBAR_ICON_COL_IDX 4
+#define STATUSBAR_ANIMATION_COL_IDX 0
+#define STATUSBAR_LINE_IDX 1
+#define STATUSBAR_COL_IDX 2
+#define STATUSBAR_WHITESPACE_INFO_IDX 3
+#define STATUSBAR_LANG_COL_IDX 4
+#define STATUSBAR_ICON_COL_IDX 5
 
 class WXDLLIMPEXP_SDK clStatusBarArtNormal : public wxCustomStatusBarArt
 {
@@ -51,21 +52,30 @@ clStatusBar::clStatusBar(wxWindow* parent, IManager* mgr)
     EventNotifier::Get()->Bind(wxEVT_WORKSPACE_CLOSED, &clStatusBar::OnWorkspaceClosed, this);
     Bind(wxEVT_STATUSBAR_CLICKED, &clStatusBar::OnFieldClicked, this);
 
-    wxCustomStatusBarField::Ptr_t lineCol(new wxCustomStatusBarFieldText(this, 250));
-    AddField(lineCol);
-
     wxCustomStatusBarField::Ptr_t buildAnimation(new wxCustomStatusBarAnimationField(
-        this, wxXmlResource::Get()->LoadBitmap("build-animation-sprite"), wxHORIZONTAL, wxSize(80, 7)));
+        this, wxXmlResource::Get()->LoadBitmap("build-animation-sprite"), wxHORIZONTAL, wxSize(80,7)));//wxSize(80, 7)));
     AddField(buildAnimation);
 
-    wxCustomStatusBarField::Ptr_t whitespace(new wxCustomStatusBarFieldText(this, 80));
+
+    wxCustomStatusBarField::Ptr_t lineCol(new wxCustomStatusBarFieldText(this, 100));
+    AddField(lineCol);
+
+    wxCustomStatusBarField::Ptr_t colnumber(new wxCustomStatusBarFieldText(this, 100));
+    AddField(colnumber);
+
+
+    wxCustomStatusBarField::Ptr_t whitespace(new wxCustomStatusBarFieldText(this, 100));
     AddField(whitespace);
 
     wxCustomStatusBarField::Ptr_t language(new wxCustomStatusBarFieldText(this, 100));
     AddField(language);
 
-    wxCustomStatusBarField::Ptr_t buildStatus(new wxCustomStatusBarBitmapField(this, 30));
+    wxCustomStatusBarField::Ptr_t buildStatus(new wxCustomStatusBarBitmapField(this, 0));
     AddField(buildStatus);
+
+    wxCustomStatusBarField::Ptr_t timeclock(new wxCustomStatusBarFieldText(this, 100));
+    AddField(timeclock);
+
 
     m_bmpBuildError = wxXmlResource::Get()->LoadBitmap("build-error");
     m_bmpBuildWarnings = wxXmlResource::Get()->LoadBitmap("build-warning");
@@ -145,15 +155,21 @@ void clStatusBar::SetLanguage(const wxString& lang)
     field->SetTooltip(lang);
 }
 
-void clStatusBar::SetLinePosColumn(const wxString& lineCol) { CallAfter(&clStatusBar::DoSetLinePosColumn, lineCol); }
+void clStatusBar::SetLineColumn(const wxString& line, const wxString& column) { CallAfter(&clStatusBar::DoSetLineColumn, line, column); }
 
-void clStatusBar::DoSetLinePosColumn(const wxString& message)
+void clStatusBar::DoSetLineColumn(const wxString& line, const wxString& column)
 {
-    wxCustomStatusBarField::Ptr_t field = GetField(STATUSBAR_LINE_COL_IDX);
+    wxCustomStatusBarField::Ptr_t field = GetField(STATUSBAR_LINE_IDX);
     CHECK_PTR_RET(field);
 
-    field->Cast<wxCustomStatusBarFieldText>()->SetText(message);
-    field->SetTooltip(message);
+    field->Cast<wxCustomStatusBarFieldText>()->SetText(line);
+    field->SetTooltip(line);
+
+    field = GetField(STATUSBAR_COL_IDX);
+    CHECK_PTR_RET(field);
+
+    field->Cast<wxCustomStatusBarFieldText>()->SetText(column);
+    field->SetTooltip(column);
 }
 
 void clStatusBar::OnAllEditorsClosed(wxCommandEvent& event)

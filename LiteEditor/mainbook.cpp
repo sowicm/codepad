@@ -1095,7 +1095,7 @@ bool MainBook::DoSelectPage(wxWindow* win)
 
     if(!editor) {
         clMainFrame::Get()->SetFrameTitle(NULL);
-        clMainFrame::Get()->GetStatusBar()->SetLinePosColumn(wxEmptyString);
+        clMainFrame::Get()->GetStatusBar()->SetLineColumn(wxEmptyString, wxEmptyString);
         UpdateNavBar(NULL);
         SendCmdEvent(wxEVT_CMD_PAGE_CHANGED, win);
 

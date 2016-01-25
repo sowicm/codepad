@@ -1224,12 +1224,13 @@ void LEditor::OnSciUpdateUI(wxStyledTextEvent& event)
 
     // update line number
     wxString message;
+    wxString line, column;
 
-    message << wxT("Ln ") << curLine + 1 << wxT(", Col ") << GetColumn(mainSelectionPos) << ", Pos "
-            << mainSelectionPos;
+    line << wxT("Line ") << curLine + 1;
+    column << wxT("Column ") << GetColumn(mainSelectionPos) + 1;
 
     // Always update the status bar with event, calling it directly causes performance degredation
-    m_mgr->GetStatusBar()->SetLinePosColumn(message);
+    m_mgr->GetStatusBar()->SetLineColumn(line, column);
 
     SetIndicatorCurrent(MATCH_INDICATOR);
     IndicatorClearRange(0, pos);

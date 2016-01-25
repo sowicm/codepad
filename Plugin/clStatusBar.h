@@ -49,7 +49,7 @@ protected:
     void OnFieldClicked(clCommandEvent& event);
 
     void DoUpdateColour();
-    void DoSetLinePosColumn(const wxString& message);
+    void DoSetLineColumn(const wxString& line, const wxString& column);
 
     void SetBuildBitmap(const wxBitmap& bmp, const wxString& tooltip);
 
@@ -81,7 +81,7 @@ public:
     /**
      * @brief update the line / column / pos field
      */
-    void SetLinePosColumn(const wxString& lineCol);
+    void SetLineColumn(const wxString& line, const wxString& column);
 
     /**
      * @brief start the animation
