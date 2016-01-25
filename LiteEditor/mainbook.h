@@ -156,10 +156,15 @@ public:
                       int lineno = wxNOT_FOUND,
                       long position = wxNOT_FOUND,
                       OF_extra extra = OF_AddJump,
-                      bool preserveSelection = true);
+                      bool preserveSelection = true,
+                      const wxString* buffer = NULL);
     LEditor* OpenFile(const BrowseRecord& rec)
     {
         return OpenFile(rec.filename, rec.project, rec.lineno, rec.position, OF_None, false);
+    }
+    LEditor* OpenFile(const wxString& file_name, const wxString* buffer)
+    {
+        return OpenFile(file_name, wxEmptyString, wxNOT_FOUND, wxNOT_FOUND, OF_AddJump, true, buffer);
     }
 
     bool AddPage(wxWindow* win,

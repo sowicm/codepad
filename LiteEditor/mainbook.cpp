@@ -303,7 +303,12 @@ void MainBook::RestoreSession(SessionEntry& session)
     for(size_t i = 0; i < vTabInfoArr.size(); i++) {
         const TabInfo& ti = vTabInfoArr[i];
         m_reloadingDoRaise = (i == vTabInfoArr.size() - 1); // Raise() when opening only the last editor
-        LEditor* editor = OpenFile(ti.GetFileName());
+        const wxString* buffer = NULL;
+        if (ti.unsaved())
+        {
+            buffer = &(ti.contents());
+        }
+        LEditor* editor = OpenFile(ti.GetFileName(), buffer);
         if(!editor) {
             if(i < sel) {
                 // have to adjust selected tab number because couldn't open tab
@@ -317,10 +322,10 @@ void MainBook::RestoreSession(SessionEntry& session)
         editor->LoadMarkersFromArray(ti.GetBookmarks());
         editor->LoadCollapsedFoldsFromArray(ti.GetCollapsedFolds());
 
-        if (ti.unsaved())
-        {
-            editor->SetText(ti.contents());
-        }
+        //if (ti.unsaved())
+        //{
+        //    editor->SetText(ti.contents());
+        //}
     }
     m_book->SetSelection(sel);
 }
@@ -507,7 +512,8 @@ LEditor* MainBook::OpenFile(const wxString& file_name,
     int lineno,
     long position,
     OF_extra extra /*=OF_AddJump*/,
-    bool preserveSelection /*=true*/)
+    bool preserveSelection /*=true*/,
+    const wxString* buffer)
 {
     wxFileName fileName(file_name);
     fileName.MakeAbsolute();
@@ -525,10 +531,10 @@ LEditor* MainBook::OpenFile(const wxString& file_name,
     }
 #endif
 
-    if(!IsFileExists(fileName)) {
-        wxLogMessage(wxT("Failed to open: %s: No such file or directory"), fileName.GetFullPath().c_str());
-        return NULL;
-    }
+    //if(!IsFileExists(fileName)) {
+        //wxLogMessage(wxT("Failed to open: %s: No such file or directory"), fileName.GetFullPath().c_str());
+    //    return NULL;
+    //}
 
     if(FileExtManager::GetType(fileName.GetFullName()) == FileExtManager::TypeBmp) {
         // a bitmap file, open it using an image viewer
@@ -548,13 +554,13 @@ LEditor* MainBook::OpenFile(const wxString& file_name,
     editor = FindEditor(fileName.GetFullPath());
     if(editor) {
         editor->SetProject(projName);
-    } else if(fileName.IsOk() == false) {
-        wxLogMessage(wxT("Invalid file name: ") + fileName.GetFullPath());
-        return NULL;
+    //} else if(fileName.IsOk() == false) {
+    //    wxLogMessage(wxT("Invalid file name: ") + fileName.GetFullPath());
+    //    return NULL;
 
-    } else if(!fileName.FileExists()) {
-        wxLogMessage(wxT("File: ") + fileName.GetFullPath() + wxT(" does not exist!"));
-        return NULL;
+    //} else if(!fileName.FileExists()) {
+    //    wxLogMessage(wxT("File: ") + fileName.GetFullPath() + wxT(" does not exist!"));
+    //    return NULL;
 
     } else {
 
@@ -566,6 +572,11 @@ LEditor* MainBook::OpenFile(const wxString& file_name,
         editor = new LEditor(m_book);
         editor->Create(projName, fileName);
 
+        if (buffer)
+        {
+            editor->SetText(*buffer);
+        }
+
         int sel = m_book->GetSelection();
         if((extra & OF_PlaceNextToCurrent) && (sel != wxNOT_FOUND)) {
             AddPage(editor, fileName.GetFullName(), fileName.GetFullPath(), wxNullBitmap, false, sel + 1);
@@ -575,7 +586,7 @@ LEditor* MainBook::OpenFile(const wxString& file_name,
         editor->SetSyntaxHighlight();
 
         // mark the editor as read only if neede
-        MarkEditorReadOnly(editor);
+        //MarkEditorReadOnly(editor);
 
         // SHow the notebook
         if(hidden) GetSizer()->Show(m_book);
