@@ -55,7 +55,10 @@ void SessionEntry::DeSerialize(wxJSONValue& root)
     for (int i = 0; i < buffers.Size(); ++i)
     {
         TabInfo oTabInfo;
-        oTabInfo.SetFileName(buffers[i]["file"].AsString());
+        if (buffers[i].HasMember("file"))
+        {
+            oTabInfo.SetFileName(buffers[i]["file"].AsString());
+        }
         oTabInfo.SetFirstVisibleLine(buffers[i]["first_visible_line"].AsInt());
         oTabInfo.SetCurrentLine(buffers[i]["current_line"].AsInt());
         //oTabInfo.m_bookmarks
@@ -81,7 +84,10 @@ void SessionEntry::Serialize(wxJSONValue& root)
     for (size_t i = 0; i < m_vTabInfoArr.size(); i++)
     {
         TabInfo& oTabInfo = m_vTabInfoArr[i];
-        root["buffers"][i]["file"] = oTabInfo.GetFileName();
+        if (oTabInfo.GetFileName().Length() > 0)
+        {
+            root["buffers"][i]["file"] = oTabInfo.GetFileName();
+        }
         root["buffers"][i]["first_visible_line"] = oTabInfo.GetFirstVisibleLine();
         root["buffers"][i]["current_line"] = oTabInfo.GetCurrentLine();
         if (oTabInfo.unsaved())

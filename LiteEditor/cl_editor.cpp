@@ -315,6 +315,7 @@ LEditor::LEditor(wxWindow* parent)
     , m_mgr(PluginManager::Get())
     , m_hasCCAnnotation(false)
     , m_richTooltip(NULL)
+    , m_untitled(false)
 {
     DoUpdateOptions();
     EventNotifier::Get()->Bind(wxEVT_EDITOR_CONFIG_CHANGED, &LEditor::OnEditorConfigChanged, this);
@@ -1027,6 +1028,18 @@ void LEditor::OnCharAdded(wxStyledTextEvent& event)
 
         } else {
 
+            if (m_context->IsDefaultContext()) // should ensure it is not a existing file but a new file
+            {
+                ClearDocumentStyle();
+                m_context = ContextManager::Get()->NewContextByBuffer(this, GetText());
+
+                SetProperties();
+
+                m_context->SetActive();
+                m_context->ApplySettings();
+                UpdateColours();
+            }
+
             m_context->AutoIndent(event.GetKey());
 
             // incase we are typing in a folded line, make sure it is visible
@@ -1576,6 +1589,8 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
         // new context is required
         SetSyntaxHighlight();
     }
+
+    m_untitled = false;
 
     // Fire a wxEVT_FILE_SAVED event
     EventNotifier::Get()->PostFileSavedEvent(fileName.GetFullPath());

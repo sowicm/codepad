@@ -304,10 +304,10 @@ void MainBook::RestoreSession(SessionEntry& session)
         const TabInfo& ti = vTabInfoArr[i];
         m_reloadingDoRaise = (i == vTabInfoArr.size() - 1); // Raise() when opening only the last editor
         const wxString* buffer = NULL;
-        if (ti.unsaved())
-        {
-            buffer = &(ti.contents());
-        }
+        //if (ti.unsaved())
+        //{
+        //    buffer = &(ti.contents());
+        //}
         LEditor* editor = OpenFile(ti.GetFileName(), buffer);
         if(!editor) {
             if(i < sel) {
@@ -317,15 +317,21 @@ void MainBook::RestoreSession(SessionEntry& session)
             continue;
         }
 
+        if (ti.GetFileName().Length() < 1)
+        {
+            editor->untitled(true);
+            editor->SetFileName(wxString(_("untitled")));
+        }
+
         editor->SetFirstVisibleLine(ti.GetFirstVisibleLine());
         editor->SetEnsureCaretIsVisible(editor->PositionFromLine(ti.GetCurrentLine()));
         editor->LoadMarkersFromArray(ti.GetBookmarks());
         editor->LoadCollapsedFoldsFromArray(ti.GetCollapsedFolds());
 
-        //if (ti.unsaved())
-        //{
-        //    editor->SetText(ti.contents());
-        //}
+        if (ti.unsaved())
+        {
+            editor->SetText(ti.contents());
+        }
     }
     m_book->SetSelection(sel);
 }
@@ -468,10 +474,7 @@ wxWindow* MainBook::FindPage(const wxString& text)
 
 LEditor* MainBook::NewEditor()
 {
-    static int fileCounter = 0;
-
-    wxString fileNameStr(_("Untitled"));
-    fileNameStr << ++fileCounter;
+    wxString fileNameStr(_("untitled"));
     wxFileName fileName(fileNameStr);
 
     // A Nice trick: hide the notebook, open the editor
@@ -481,6 +484,7 @@ LEditor* MainBook::NewEditor()
 
     LEditor* editor = new LEditor(m_book);
     editor->SetFileName(fileName);
+    editor->untitled(true);
     AddPage(editor, fileName.GetFullName(), fileName.GetFullPath(), wxNullBitmap, true);
 
 #ifdef __WXMAC__
@@ -1326,7 +1330,10 @@ void MainBook::CreateSession(SessionEntry& session, wxArrayInt* excludeArr)
             session.SetSelectedTab(vTabInfoArr.size());
         }
         TabInfo oTabInfo;
-        oTabInfo.SetFileName(editors[i]->GetFileName().GetFullPath());
+        if (!editors[i]->untitled())
+        {
+            oTabInfo.SetFileName(editors[i]->GetFileName().GetFullPath());
+        }
         oTabInfo.SetFirstVisibleLine(editors[i]->GetFirstVisibleLine());
         oTabInfo.SetCurrentLine(editors[i]->GetCurrentLine());
 

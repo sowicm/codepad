@@ -66,6 +66,26 @@ ContextBasePtr ContextManager::NewContextByFileName(LEditor* parent, const wxFil
     return ContextManager::Get()->NewContext(parent, lexer->GetName());
 }
 
+ContextBasePtr ContextManager::NewContextByBuffer(LEditor *parent, const wxString &buffer)
+{
+    LexerConf::Ptr_t lexer;
+    if (buffer.Contains("#include"))
+    {
+        lexer = EditorConfigST::Get()->GetLexer("c++");
+    }
+    else if (buffer.Contains("import "))
+    {
+        lexer = EditorConfigST::Get()->GetLexer("python");
+    }
+    else
+    {
+        return ContextManager::Get()->NewContext(parent, wxT("Text"));
+    }
+
+    return ContextManager::Get()->NewContext(parent, lexer->GetName());
+}
+
+
 void ContextManager::Initialize()
 {
     // Popuplate the contexts available

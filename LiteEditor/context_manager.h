@@ -47,6 +47,8 @@ public:
      */
     ContextBasePtr NewContext(LEditor *parent, const wxString &lexerName);
     ContextBasePtr NewContextByFileName(LEditor *parent, const wxFileName &fileName);
+    ContextBasePtr NewContextByBuffer(LEditor *parent, const wxString &buffer);
+
     void Initialize();
     
 private:

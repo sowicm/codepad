@@ -238,6 +238,8 @@ protected:
     /// A space delimited list of all the variables in this editor
     wxString m_keywordLocals;
 
+    bool m_untitled;
+
 public:
     static bool m_ccShowPrivateMembers;
     static bool m_ccShowItemsComments;
@@ -274,6 +276,15 @@ public:
 
     /// Default destructor
     virtual ~LEditor();
+
+    bool untitled() const
+    {
+        return m_untitled;
+    }
+    void untitled(bool _untitled)
+    {
+        m_untitled = _untitled;
+    }
 
     // Save the editor data into file
     virtual bool SaveFile();
