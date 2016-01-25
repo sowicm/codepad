@@ -169,8 +169,8 @@ bool SessionManager::GetSession(const wxString& workspaceFile,
 
     //wxXmlNode* const node = doc.GetRoot();
     //if(!node || node->GetName() != Tag) return false;
-    if (root["name"].AsString() != Tag)
-        return false;
+    //if (root["name"].AsString() != Tag)
+    //    return false;
 
 //    Archive arch;
 //    arch.SetXmlNode(node);
