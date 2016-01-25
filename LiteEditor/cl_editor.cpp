@@ -1028,7 +1028,7 @@ void LEditor::OnCharAdded(wxStyledTextEvent& event)
 
         } else {
 
-            if (m_context->IsDefaultContext()) // should ensure it is not a existing file but a new file
+            if (m_context->IsDefaultContext() && m_untitled)
             {
                 ClearDocumentStyle();
                 m_context = ContextManager::Get()->NewContextByBuffer(this, GetText());
