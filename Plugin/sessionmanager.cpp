@@ -128,7 +128,7 @@ bool SessionManager::Load(const wxString& fileName)
 wxFileName SessionManager::GetSessionFileName(const wxString& name, const wxString& suffix /*=wxT("")*/) const
 {
     if(defaultSessionName == name) {
-        wxFileName sessionFileName = wxFileName(clStandardPaths::Get().GetUserDataDir(), "Default.session");
+        wxFileName sessionFileName = wxFileName(clStandardPaths::Get().GetUserDataDir(), "Auto Save Session.session");
         sessionFileName.AppendDir("config");
         return sessionFileName;
 

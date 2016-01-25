@@ -1720,7 +1720,7 @@ void clMainFrame::Bootstrap()
 
     // Load the session manager
     wxString sessConfFile;
-    sessConfFile << clStandardPaths::Get().GetUserDataDir() << wxT("/config/sessions.xml");
+    sessConfFile << clStandardPaths::Get().GetUserDataDir() << wxT("/config/sessions.json");
     SessionManager::Get().Load(sessConfFile);
 
     // restore last session if needed
