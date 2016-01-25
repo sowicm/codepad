@@ -105,7 +105,9 @@ static void SetCDATANodeContent(wxXmlNode* node, const wxString& text)
 }
 
 // class Tab info
-TabInfo::TabInfo() {}
+TabInfo::TabInfo()
+    : m_unsaved(false)
+{}
 
 TabInfo::~TabInfo() {}
 

@@ -4710,9 +4710,9 @@ bool clMainFrame::SaveLayoutAndSession()
     }
 
     // make sure there are no 'unsaved documents'
-    if(!GetMainBook()->CloseAll(true)) {
-        return false;
-    }
+//    if(!GetMainBook()->CloseAll(true)) {
+//        return false;
+//    }
 
     // save general information
     if(IsMaximized()) {

@@ -60,6 +60,8 @@ class WXDLLIMPEXP_CL TabInfo : public SerializedObject
 	int m_currentLine;
 	wxArrayString m_bookmarks;
 	std::vector<int> m_folds;
+	wxString m_contents;
+	bool m_unsaved;
 public:
 	// setters
 	void SetFileName(const wxString& _fileName) {
@@ -76,6 +78,22 @@ public:
 	}
 	void SetCollapsedFolds(const std::vector<int>& folds) {
 		m_folds = folds;
+	}
+	void contents(const wxString& _contents)
+	{
+		m_contents = _contents;
+	}
+	const wxString& contents() const
+	{
+		return m_contents;
+	}
+	void unsaved(bool _unsaved)
+	{
+		m_unsaved = _unsaved;
+	}
+	bool unsaved() const
+	{
+		return m_unsaved;
 	}
 	//getters
 	const wxString& GetFileName() const {

@@ -316,6 +316,11 @@ void MainBook::RestoreSession(SessionEntry& session)
         editor->SetEnsureCaretIsVisible(editor->PositionFromLine(ti.GetCurrentLine()));
         editor->LoadMarkersFromArray(ti.GetBookmarks());
         editor->LoadCollapsedFoldsFromArray(ti.GetCollapsedFolds());
+
+        if (ti.unsaved())
+        {
+            editor->SetText(ti.contents());
+        }
     }
     m_book->SetSelection(sel);
 }
@@ -1313,6 +1318,12 @@ void MainBook::CreateSession(SessionEntry& session, wxArrayInt* excludeArr)
         oTabInfo.SetFileName(editors[i]->GetFileName().GetFullPath());
         oTabInfo.SetFirstVisibleLine(editors[i]->GetFirstVisibleLine());
         oTabInfo.SetCurrentLine(editors[i]->GetCurrentLine());
+
+        if (editors[i]->IsModified())
+        {
+            oTabInfo.unsaved(true);
+            oTabInfo.contents(editors[i]->GetText());
+        }
 
         wxArrayString astrBookmarks;
         editors[i]->StoreMarkersToArray(astrBookmarks);

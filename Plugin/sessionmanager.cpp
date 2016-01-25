@@ -60,6 +60,14 @@ void SessionEntry::DeSerialize(wxJSONValue& root)
         oTabInfo.SetCurrentLine(buffers[i]["current_line"].AsInt());
         //oTabInfo.m_bookmarks
         //oTabInfo.m_folds (collapsedfolds)
+        //
+
+        if (buffers[i].HasMember("contents"))
+        {
+            oTabInfo.unsaved(true);
+            oTabInfo.contents(buffers[i]["contents"].AsString());
+        }
+
         m_vTabInfoArr.push_back(oTabInfo);
     }
 
@@ -76,6 +84,10 @@ void SessionEntry::Serialize(wxJSONValue& root)
         root["buffers"][i]["file"] = oTabInfo.GetFileName();
         root["buffers"][i]["first_visible_line"] = oTabInfo.GetFirstVisibleLine();
         root["buffers"][i]["current_line"] = oTabInfo.GetCurrentLine();
+        if (oTabInfo.unsaved())
+        {
+            root["buffers"][i]["contents"] = oTabInfo.contents();
+        }
     }
    // arch.Write(wxT("m_breakpoints"), (SerializedObject*)&m_breakpoints);
 }
