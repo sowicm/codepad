@@ -58,6 +58,9 @@ enum NotebookStyle {
     /// Underline the active tab with a 2 pixel line
     kNotebook_UnderlineActiveTab = (1 << 14),
 
+    /// Hide Tabs
+    kNotebook_HideTabs = (1 << 28),
+
     /// Default notebook
     kNotebook_Default = kNotebook_LightTabs | kNotebook_ShowFileListButton,
 };
