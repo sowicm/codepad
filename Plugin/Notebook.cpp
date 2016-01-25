@@ -65,7 +65,10 @@ Notebook::Notebook(
 
     SetSizer(sizer);
 
-    if(GetStyle() & kNotebook_BottomTabs) {
+    if (GetStyle() & kNotebook_HideTabs)
+    {
+        sizer->Add(m_windows, 1, wxEXPAND);
+    } else if (GetStyle() & kNotebook_BottomTabs) {
         sizer->Add(m_windows, 1, wxEXPAND);
         sizer->Add(m_tabCtrl, 0, wxEXPAND);
 
@@ -108,7 +111,11 @@ void Notebook::SetStyle(size_t style)
         sz = new wxBoxSizer(wxVERTICAL);
     }
 
-    if((style & kNotebook_BottomTabs) || (style & kNotebook_RightTabs)) {
+    if (GetStyle() & kNotebook_HideTabs)
+    {
+        sz->Add(m_windows, 1, wxEXPAND);
+    }
+    else if((style & kNotebook_BottomTabs) || (style & kNotebook_RightTabs)) {
         sz->Add(m_windows, 1, wxEXPAND);
         sz->Add(m_tabCtrl, 0, wxEXPAND);
 
@@ -400,6 +407,11 @@ void clTabCtrl::OnPaint(wxPaintEvent& e)
         }
     }
 #endif
+
+    //if (GetStyle() & kNotebook_HideTabs)
+    //{
+        //return;
+    //}
 
     // Draw background
     dc.SetPen(tabAreaBgCol);
