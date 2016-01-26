@@ -50,6 +50,8 @@ protected:
 public:
     clDockingManager();
     virtual ~clDockingManager();
+
+    void DoFrameLayout();
 };
 
 #endif // CLDOCKINGMANAGER_H
