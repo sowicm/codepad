@@ -2870,9 +2870,24 @@ void clMainFrame::OnExecuteNoDebug(wxCommandEvent& event)
     	try
     	{
     		LEditor* editor = GetMainBook()->GetActiveEditor();
-    		// todo: untitled
+
+    		if (editor->untitled())
+    		{
+    			wxFileName tmpFileName = wxFileName(clStandardPaths::Get().GetUserDataDir(), ".tmpbuild.c");
+        		//sessionFileName.AppendDir("tmp");
+        		wxFFile fp(tmpFileName.GetFullPath(), wxT("wb"));
+			    if (!fp.IsOpened())
+			    	return;
+		        fp.Write(editor->GetText(), wxConvUTF8);
+		        fp.Close();
+			    ManagerST::Get()->filename(tmpFileName.GetFullPath());
+    		}
+    		else
+    		{
+			    ManagerST::Get()->filename(editor->GetFileName().GetFullPath());
+
+    		}
 		    // Prepare the commands to execute
-		    ManagerST::Get()->filename(editor->GetFileName().GetFullPath());
 		    QueueCommand commandExecute(QueueCommand::kExecuteNoDebug);
 	        QueueCommand buildCommand(QueueCommand::kBuild);
 	        ManagerST::Get()->PushQueueCommand(buildCommand);
