@@ -1063,7 +1063,7 @@ void MainBook::MarkEditorReadOnly(LEditor* editor)
     if(readOnly && editor->GetModify()) {
         // an attempt to mark a modified file as read-only
         // ask the user to save his changes before
-        ::wxMessageBox(_("Please save your changes before marking the file as read only"), "CodeLite",
+        ::wxMessageBox(_("Please save your changes before marking the file as read only"), "Sowicm's Codepad",
             wxOK | wxCENTER | wxICON_WARNING, this);
         return;
     }

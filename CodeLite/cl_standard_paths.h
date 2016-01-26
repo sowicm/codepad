@@ -75,7 +75,7 @@ public:
     // Typically this function returns:
     // MSW: /path/to/codelite.exe
     // GTK: /usr/bin
-    // OSX: /path/to/codelite.app/Contents/MacOS
+    // OSX: /path/to/Codepad.app/Contents/MacOS
     wxString GetBinFolder() const;
 
     /**

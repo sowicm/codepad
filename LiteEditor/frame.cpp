@@ -871,8 +871,8 @@ clMainFrame::~clMainFrame(void)
 void clMainFrame::Initialize(bool loadLastSession)
 {
     // set the revision number in the frame title
-    wxString title(_("CodeLite "));
-    title << CODELITE_VERSION_STRING;
+    wxString title(_("Sowicm's Codepad"));
+//    title << CODELITE_VERSION_STRING;
 
     // initialize the environment variable configuration manager
     EnvironmentConfig::Instance()->Load();
@@ -1089,7 +1089,7 @@ void clMainFrame::CreateGUIControls()
     }
 
     if(!BuildSettingsConfigST::Get()->Load(wxT("2.1"))) {
-        CL_ERROR("Could not locate build configuration! CodeLite installation is broken this might cause unwanted "
+        CL_ERROR("Could not locate build configuration! Sowicm's Codepad installation is broken this might cause unwanted "
                  "behavior!");
     }
 
@@ -2225,7 +2225,7 @@ void clMainFrame::OnFileSaveTabGroup(wxCommandEvent& WXUNUSED(event))
 
         wxString sessionName = dlg.GetTabgroupName();
         if(sessionName.IsEmpty()) {
-            if(wxMessageBox(_("Please enter a name for the tab group"), _("CodeLite"), wxICON_ERROR | wxOK | wxCANCEL,
+            if(wxMessageBox(_("Please enter a name for the tab group"), _("Sowicm's Codepad"), wxICON_ERROR | wxOK | wxCANCEL,
                    this) != wxOK) {
                 return;
             } else {
@@ -2998,8 +2998,8 @@ void clMainFrame::OnTimer(wxTimerEvent& event)
         m_workspaceRetagIsRequired = false;
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, XRCID("full_retag_workspace"));
         this->AddPendingEvent(evt);
-        GetMainBook()->ShowMessage(_("Your workspace symbols file does not match the current version of CodeLite. "
-                                     "CodeLite will perform a full retag of the workspace"));
+        GetMainBook()->ShowMessage(_("Your workspace symbols file does not match the current version of Codepad. "
+                                     "Codepad will perform a full retag of the workspace"));
     }
 
     // For some reason, under Linux we need to force the menu accelerator again
@@ -4009,12 +4009,12 @@ void clMainFrame::OnNewVersionAvailable(wxCommandEvent& e)
 {
     if(e.GetEventType() == wxEVT_CMD_VERSION_UPTODATE) {
         // All is up to date
-        wxMessageBox(_("You already have the latest version of CodeLite"), "CodeLite", wxOK | wxCENTRE, this);
+        wxMessageBox(_("You already have the latest version of Codepad"), "Sowicm's Codepad", wxOK | wxCENTRE, this);
     } else {
         WebUpdateJobData* data = reinterpret_cast<WebUpdateJobData*>(e.GetClientData());
         if(data) {
             if(data->IsUpToDate() == false) {
-                wxRichMessageDialog dlg(this, _("A new version of CodeLite is available for download"), "CodeLite",
+                wxRichMessageDialog dlg(this, _("A new version of Codepad is available for download"), "Sowicm's Codepad",
                     wxYES_NO | wxCANCEL | wxYES_DEFAULT | wxCENTRE | wxICON_INFORMATION);
                 dlg.SetYesNoLabels(_("Download"), _("No"));
                 if(dlg.ShowModal() == wxID_YES) {
@@ -4247,7 +4247,7 @@ void clMainFrame::SetFrameTitle(LEditor* editor)
 
     pattern.Trim().Trim(false);
     if(pattern.IsEmpty()) {
-        pattern << "CodeLite";
+        pattern << "Sowicm's Codepad";
     }
 
     title << pattern;
@@ -4724,7 +4724,7 @@ bool clMainFrame::ReloadExternallyModifiedProjectFiles()
 
     // Make sure we don't have the mouse captured in any editor or we might get a crash somewhere
     wxStandardID res = ::PromptForYesNoDialogWithCheckbox(_("Workspace or project settings have been modified outside "
-                                                            "of CodeLite\nWould you like to reload the workspace?"),
+                                                            "of Codepad\nWould you like to reload the workspace?"),
         "ReloadWorkspaceWhenAltered", _("Reload workspace"), _("Not now"));
     // Don't do anything if "X" is pressed
     if(res != wxID_CANCEL) {
@@ -5039,7 +5039,7 @@ void clMainFrame::OnGotoCodeLiteDownloadPage(wxCommandEvent& e)
 void clMainFrame::DoSuggestRestart()
 {
 #ifdef __WXMAC__
-    GetMainBook()->ShowMessage(_("Some of the changes made requires restart of CodeLite"));
+    GetMainBook()->ShowMessage(_("Some of the changes made requires restart of Codepad"));
 #else
     // On Winodws & GTK we offer auto-restart
     ButtonDetails btn1, btn2;
@@ -5053,7 +5053,7 @@ void clMainFrame::DoSuggestRestart()
     btn2.buttonLabel = _("Not now");
     btn2.window = NULL;
 
-    GetMainBook()->ShowMessage(_("Some of the changes made require a restart of CodeLite. Restart now?"), false,
+    GetMainBook()->ShowMessage(_("Some of the changes made require a restart of Codepad. Restart now?"), false,
         PluginManager::Get()->GetStdIcons()->LoadBitmap(wxT("messages/48/restart")), btn1, btn2);
 #endif
 }

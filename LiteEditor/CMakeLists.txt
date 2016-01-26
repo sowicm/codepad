@@ -1,9 +1,9 @@
 # define minimum cmake version
 cmake_minimum_required(VERSION 2.6.2)
  
-# Our project is called 'codelite' this is how it will be called in
+# Our project is called 'codepad' this is how it will be called in
 # visual studio, and in our makefiles. 
-project(codelite)
+project(codepad)
 
 # It was noticed that when using MinGW gcc it is essential that 'core' is mentioned before 'base'.
 find_package(wxWidgets COMPONENTS ${WX_COMPONENTS} REQUIRED)
@@ -61,7 +61,7 @@ set (RES_FILE "")
 if (MINGW)
     set(RES_FILES "code_parser.rc")
 endif()
-add_executable(codelite ${SRCS} ${RES_FILES})
+add_executable(Codepad ${SRCS} ${RES_FILES})
 
 set( ADDITIONAL_LIBRARIES "" )
 
@@ -78,11 +78,11 @@ else (UNIX)
 endif (UNIX)
 
 if(GTK2_FOUND)
-    target_link_libraries(codelite ${LINKER_OPTIONS} ${GTK2_LIBRARIES} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
+    target_link_libraries(Codepad ${LINKER_OPTIONS} ${GTK2_LIBRARIES} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
 elseif (GTK3_FOUND)
-    target_link_libraries(codelite ${LINKER_OPTIONS} ${GTK3_LIBRARIES} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
+    target_link_libraries(Codepad ${LINKER_OPTIONS} ${GTK3_LIBRARIES} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
 else()
-    target_link_libraries(codelite ${LINKER_OPTIONS} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
+    target_link_libraries(Codepad ${LINKER_OPTIONS} ${wxWidgets_LIBRARIES} ${CLANG_LIBRARY} -L"${CL_LIBPATH}" libcodelite plugin ${ADDITIONAL_LIBRARIES})
 endif()
 
 ##################################################################
@@ -93,7 +93,7 @@ endif()
 set (EXE_PERM OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
 
 if(NOT APPLE)
-    install(TARGETS codelite DESTINATION ${CL_PREFIX}/bin PERMISSIONS ${EXE_PERM})
+    install(TARGETS Codepad DESTINATION ${CL_PREFIX}/bin PERMISSIONS ${EXE_PERM})
     if (UNIX)
         install(FILES ${CL_SRC_ROOT}/Runtime/codelite_exec DESTINATION ${CL_PREFIX}/bin PERMISSIONS ${EXE_PERM})
         install(FILES ${CL_SRC_ROOT}/Runtime/codelite_fix_files DESTINATION ${CL_PREFIX}/bin PERMISSIONS ${EXE_PERM})
@@ -217,14 +217,14 @@ if(NOT APPLE)
         endforeach()
 
         file(GLOB wxfilepaths ${WX_LIBS_ALL})
-        install(FILES ${wxfilepaths} DESTINATION ${CL_PREFIX}/${CL_INSTALL_LIBDIR}/codelite)
+        install(FILES ${wxfilepaths} DESTINATION ${CL_PREFIX}/${CL_INSTALL_LIBDIR}/Codepad)
     endif()
 
     if ( USE_CLANG AND MINGW )
       install(FILES ${CLANG_BINARY} DESTINATION ${PLUGINS_DIR})
     endif( USE_CLANG AND MINGW )
 else() # !APPLE
-    install(TARGETS codelite DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS PERMISSIONS ${EXE_PERM})
-    CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite)
-    install(FILES ${CL_SRC_ROOT}/Runtime/OpenTerm DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport PERMISSIONS ${EXE_PERM})
+    install(TARGETS Codepad DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS PERMISSIONS ${EXE_PERM})
+    CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad)
+    install(FILES ${CL_SRC_ROOT}/Runtime/OpenTerm DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport PERMISSIONS ${EXE_PERM})
 endif()

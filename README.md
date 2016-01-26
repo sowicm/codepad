@@ -96,11 +96,11 @@ Clone the repo (lets assume that you have a folder `/Users/YOU/src`)
   make install
   ```
  
-You should now have an app bundle `/Users/YOU/codelite/build-release/codelite.app`
+You should now have an app bundle `/Users/YOU/codelite/build-release/Codepad.app`
  
 To launch CodeLite:
 
-`open /Users/YOU/codelite/build-release/codelite.app`
+`open /Users/YOU/codelite/build-release/Codepad.app`
 
 ![Windows Logo][9] Building CodeLite on Windows
 ----

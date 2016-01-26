@@ -1153,7 +1153,7 @@ void Manager::AddFilesToProject(const wxArrayString& files, const wxString& vdFu
     if(actualAdded.GetCount() < files.GetCount()) {
         wxString msg = wxString::Format(_("%u file(s) not added, probably due to a name-clash"),
                                         (unsigned int)(files.GetCount() - actualAdded.GetCount()));
-        wxMessageBox(msg, _("CodeLite"), wxOK, clMainFrame::Get());
+        wxMessageBox(msg, _("Sowicm's Codepad"), wxOK, clMainFrame::Get());
     }
 }
 
@@ -1975,9 +1975,9 @@ void Manager::DbgStart(long attachPid)
         }
     }
     if(!ExeLocator::Locate(terminal, where)) {
-        wxMessageBox(_("Failed to locate the configured default terminal application required by CodeLite, please "
+        wxMessageBox(_("Failed to locate the configured default terminal application required by Sowicm's Codepad, please "
                        "install it or check your configuration!"),
-                     _("CodeLite"),
+                     _("Sowicm's Codepad"),
                      wxOK | wxCENTER | wxICON_WARNING,
                      clMainFrame::Get());
         return;
@@ -2040,7 +2040,7 @@ void Manager::DbgStart(long attachPid)
         wxString message;
         message << _("Failed to launch debugger '") << debuggerName << _("': debugger not loaded\n");
         message << _("Make sure that you have an open workspace and that the active project is of type 'Executable'");
-        wxMessageBox(message, _("CodeLite"), wxOK | wxICON_WARNING);
+        wxMessageBox(message, _("Sowicm's Codepad"), wxOK | wxICON_WARNING);
         return;
     }
     startup_info.debugger = dbgr;
@@ -2090,7 +2090,7 @@ void Manager::DbgStart(long attachPid)
         wxString errmsg;
         errmsg << _("Could not find project configuration!\n")
                << _("Make sure that everything is set properly in your project settings");
-        ::wxMessageBox(errmsg, wxT("CodeLite"), wxOK | wxICON_ERROR);
+        ::wxMessageBox(errmsg, wxT("Sowicm's Codepad"), wxOK | wxICON_ERROR);
         return;
 
     } else if(attachPid == wxNOT_FOUND) {
@@ -2157,7 +2157,7 @@ void Manager::DbgStart(long attachPid)
         m_debuggerTerminal.Launch(wxString() << _("Debugging: ") << exepath << wxT(" ") << args);
         if(!m_debuggerTerminal.IsValid()) {
             ::wxMessageBox(_("Could not launch terminal for debugger"),
-                           "CodeLite",
+                           "Sowicm's Codepad",
                            wxOK | wxCENTER | wxICON_ERROR,
                            clMainFrame::Get());
             return;
@@ -2552,7 +2552,7 @@ void Manager::UpdateGotControl(const DebuggerEventData& e)
             wxMessageDialog dlg(clMainFrame::Get(),
                                 _("Program Received signal ") + signame + wxT("\n") +
                                     _("Stack trace is available in the 'Call Stack' tab\n"),
-                                _("CodeLite"),
+                                _("Sowicm's Codepad"),
                                 wxICON_ERROR | wxOK);
             dlg.ShowModal();
         }
@@ -2578,7 +2578,7 @@ void Manager::UpdateGotControl(const DebuggerEventData& e)
 
         wxMessageDialog dlg(clMainFrame::Get(),
                             _("Assertion failed!\nStack trace is available in the 'Call Stack' tab\n"),
-                            _("CodeLite"),
+                            _("Sowicm's Codepad"),
                             wxICON_ERROR | wxOK);
         dlg.ShowModal();
 
@@ -2610,7 +2610,7 @@ void Manager::UpdateGotControl(const DebuggerEventData& e)
 
     case DBG_EXIT_WITH_ERROR: {
         wxMessageBox(wxString::Format(_("Debugger exited with the following error string:\n%s"), e.m_text.c_str()),
-                     _("CodeLite"),
+                     _("Sowicm's Codepad"),
                      wxOK | wxICON_ERROR);
         // fall through
     }
@@ -3705,7 +3705,7 @@ void Manager::OnBuildStarting(clBuildEvent& event)
 
         // Prompt the user and cancel the build
         ::wxMessageBox(_("Compilers updated successfully!\nYou can now build your workspace"),
-                       "CodeLite",
+                       "Sowicm's Codepad",
                        wxOK | wxCENTER | wxICON_INFORMATION);
         event.Skip(false);
     }

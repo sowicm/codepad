@@ -35,7 +35,7 @@ void clInitializeDialog::OnLexersUpgradeProgress(clCommandEvent& e)
 {
     e.Skip();
     m_gauge->SetValue(e.GetInt());
-    m_banner->SetText(_("CodeLite upgrade"), e.GetString());
+    m_banner->SetText(_("Sowicm's Codepad upgrade"), e.GetString());
     wxSafeYield(this);
 }
 

@@ -205,7 +205,7 @@ static wxString MacGetInstallPath()
     _NSGetExecutablePath(path, &path_len);
 
     // path now contains
-    // CodeLite.app/Contents/MacOS/
+    // Codepad.app/Contents/MacOS/
     wxFileName fname(wxString(path, wxConvUTF8));
 
     // remove he MacOS part of the exe path

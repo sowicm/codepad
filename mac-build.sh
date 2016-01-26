@@ -17,7 +17,7 @@ Usage:
     
 Options:
     -h | --help         show this help screen
-    -d | --debug        build codelite.app bundle in debug mode (the default is to build in release mode)
+    -d | --debug        build Codepad.app bundle in debug mode (the default is to build in release mode)
     -w | --wxc          enable wxCrafter plugin
     -c | --clean        perform clean
          --cmake        Run cmake before building
@@ -76,6 +76,6 @@ fi
 
 ${MAKE_COMMAND}
 
-echo "-- Creating bundle codelite.app ...."
+echo "-- Creating bundle Codepad.app ...."
 cd pack && ./make_mac_bundle.sh
 echo "-- Done"

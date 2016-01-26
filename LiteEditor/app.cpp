@@ -106,7 +106,7 @@ wxString MacGetBasePath()
     _NSGetExecutablePath(path, &path_len);
 
     // path now contains
-    // CodeLite.app/Contents/MacOS/
+    // Codepad.app/Contents/MacOS/
     wxFileName fname(wxString(path, wxConvUTF8));
 
     // remove he MacOS part of the exe path
@@ -289,9 +289,9 @@ CodeLiteApp::~CodeLiteApp(void)
 bool CodeLiteApp::OnInit()
 {
 #if defined(__WXMSW__) && !defined(NDEBUG)
-    SetAppName(wxT("codelite-dbg"));
+    SetAppName(wxT("Sowicm's Codepad-dbg"));
 #else
-    SetAppName(wxT("codelite"));
+    SetAppName(wxT("Sowicm's Codepad"));
 #endif
 
 #if defined(__WXGTK__) || defined(__WXMAC__)
@@ -374,7 +374,7 @@ bool CodeLiteApp::OnInit()
     if(parser.Found(wxT("v"))) {
 // print version
 #ifdef __WXMSW__
-        ::wxMessageBox(wxString() << "CodeLite IDE v" << CODELITE_VERSION_STRING, "CodeLite");
+        ::wxMessageBox(wxString() << "CodeLite IDE v" << CODELITE_VERSION_STRING, "Sowicm's Codepad");
 #else
         wxPrintf("CodeLite IDE v%s\n", CODELITE_VERSION_STRING);
 #endif
@@ -653,7 +653,7 @@ bool CodeLiteApp::OnInit()
 
         bool codelitemo_found = m_locale.AddCatalog(wxT("codelite"));
         if(!codelitemo_found) {
-            m_locale.AddCatalog(wxT("CodeLite")); // Hedge bets re our spelling
+            m_locale.AddCatalog(wxT("Sowicm's Codepad")); // Hedge bets re our spelling
         }
 
         if(!codelitemo_found) {
@@ -748,7 +748,7 @@ bool CodeLiteApp::CopySettings(const wxString& destDir, wxString& installPath)
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     // copy new settings from the global installation location which is currently located at
-    // /usr/local/share/codelite/ (Linux) or at codelite.app/Contents/SharedSupport
+    // /usr/local/share/codelite/ (Linux) or at Codepad.app/Contents/SharedSupport
     ///////////////////////////////////////////////////////////////////////////////////////////
     CopyDir(installPath + wxT("/templates/"), destDir + wxT("/templates/"));
     massCopy(installPath + wxT("/images/"), wxT("*.png"), destDir + wxT("/images/"));

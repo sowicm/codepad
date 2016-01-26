@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 if(APPLE)
-    set( PLUGINS_DIR ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/plugins)
+    set( PLUGINS_DIR ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/plugins)
 else()
     set( PLUGINS_DIR "${CL_PREFIX}/${CL_INSTALL_LIBDIR}/codelite")
 endif()
@@ -90,11 +90,11 @@ _FIND_WX_LIBRARIES()
 
 #--------------------------------------------------------------------
 # Install a file into 
-# /usr/lib/codelite/share or codelite.app/Contents/SharedSupport
+# /usr/lib/codelite/share or Codepad.app/Contents/SharedSupport
 #--------------------------------------------------------------------
 macro(CL_INSTALL_FILE_SHARED _filename_)
     if(APPLE)
-        install(FILES ${_filename_} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport)
+        install(FILES ${_filename_} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport)
     else()
         install(FILES ${_filename_} DESTINATION ${CL_PREFIX}/share/codelite)
     endif()
@@ -105,8 +105,8 @@ endmacro()
 #------------------------------------
 macro(CL_INSTALL_PLUGIN _target_)
     if(APPLE)
-        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/plugins)
-        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/plugins/${_target_}.dylib)
+        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/plugins)
+        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/plugins/${_target_}.dylib)
     else()
         install(TARGETS ${_target_} DESTINATION ${PLUGINS_DIR})
     endif()
@@ -122,8 +122,8 @@ macro(CL_INSTALL_LIBRARY _target_)
         if ( LIBPREFIX_INDEX GREATER -1 )
             set(__LIBNAME "lib${LIBPREFIX_INDEX}")
         endif()
-        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/)
-        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/${__LIBNAME})
+        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/)
+        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/${__LIBNAME})
     else()
         install(TARGETS ${_target_} DESTINATION ${PLUGINS_DIR})
     endif()
@@ -134,8 +134,8 @@ endmacro()
 #------------------------------------
 macro(CL_INSTALL_EXECUTABLE _target_)
     if(APPLE)
-        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/)
-        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/${_target_})
+        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/)
+        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/${_target_})
     else()
         # On non OSX, we place the non plugins next to the plugins
         set (EXE_PERM OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ)
@@ -150,9 +150,9 @@ endmacro()
 #------------------------------------
 macro(CL_INSTALL_DEBUGGER _target_)
     if(APPLE)
-        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/debuggers)
+        install(TARGETS ${_target_} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/debuggers)
         # now that the plugin is installed, run install_name_tool
-        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/debuggers/${_target_}.dylib)
+        CL_INSTALL_NAME_TOOL_STD(${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/debuggers/${_target_}.dylib)
     else()
         install(TARGETS ${PLUGIN_NAME} DESTINATION ${PLUGINS_DIR}/debuggers)
     endif()
@@ -168,77 +168,77 @@ macro(OSX_MAKE_BUNDLE_DIRECTORY)
         endif()
         
         message("-- Removing old bundle folder...")
-        file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/codelite.app)
+        file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/Codepad.app)
         message("-- Removing old bundle folder...done")
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/Resources)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/plugins)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/resources)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/debuggers)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config/cppcheck)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/dics)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app/Contents)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app/Contents/MacOS)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/Resources)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/plugins)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/resources)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/debuggers)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config/cppcheck)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/dics)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/MacOS)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
         
         file(COPY ${CL_SRC_ROOT}/codelite_terminal/icon.icns 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
 
         file(COPY ${CL_SRC_ROOT}/bitmaps/osx/icon.icns 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/codelite.app/Contents/Resources)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/Resources)
             
         file(COPY ${CL_SRC_ROOT}/Runtime/cl_workspace.icns 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/codelite.app/Contents/Resources)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/Resources)
 
         # Copy Info.plist
-        file(COPY ${CL_SRC_ROOT}/Runtime/Info.plist DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents)
+        file(COPY ${CL_SRC_ROOT}/Runtime/Info.plist DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents)
         file(COPY ${CL_SRC_ROOT}/codelite_terminal/Info.plist 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-terminal.app/Contents)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents)
         
         ## Copy external libraries into the bundle folder
         _FIND_WX_LIBRARIES()
         
         file(GLOB WXLIBS ${_WX_LIBS_DIR}/lib${_WX_LIB_NAME}*.dylib)
         foreach(WXLIB ${WXLIBS})
-            file(COPY ${WXLIB} DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS)
+            file(COPY ${WXLIB} DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS)
         endforeach()
         
         ## Copy pre-built binaries
         file(COPY ${CL_SRC_ROOT}/Runtime/debugserver 
              DESTINATION 
-             ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS)
+             ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS)
         
         ## Copy and fix libclang.dylib / liblldb
         file(COPY ${CL_SRC_ROOT}/sdk/clang/lib/libclang.3.7.dylib 
              DESTINATION 
-             ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/)
+             ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/)
 
         file(COPY ${CL_SRC_ROOT}/sdk/lldb/unix/lib/liblldb.3.5.0.dylib
              DESTINATION 
-             ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/
+             ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/
              )
 
         ## codelite-clang-format
         file(COPY ${CL_SRC_ROOT}/sdk/clang/lib/clang-format.osx 
              DESTINATION 
-                  ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/)
+                  ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/)
                   
-        file(RENAME ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/clang-format.osx 
-             ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite-clang-format)
+        file(RENAME ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/clang-format.osx 
+             ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-clang-format)
         
         ## folders
         install(
             DIRECTORY ${CL_SRC_ROOT}/Runtime/plugins/resources
-            DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/
+            DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/
             USE_SOURCE_PERMISSIONS
             PATTERN ".svn" EXCLUDE
             PATTERN ".git" EXCLUDE
@@ -251,7 +251,7 @@ macro(OSX_MAKE_BUNDLE_DIRECTORY)
                       ${CL_SRC_ROOT}/Runtime/lexers 
                       ${CL_SRC_ROOT}/Runtime/templates 
                       ${CL_SRC_ROOT}/Runtime/rc
-            DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/
+            DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/
             USE_SOURCE_PERMISSIONS
             PATTERN ".svn" EXCLUDE
             PATTERN ".git" EXCLUDE
@@ -259,46 +259,46 @@ macro(OSX_MAKE_BUNDLE_DIRECTORY)
         
         install(FILES ${CL_SRC_ROOT}/Runtime/config/accelerators.conf.default 
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config)
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config)
                     
         install(FILES ${CL_SRC_ROOT}/Runtime/config/codelite.layout.default 
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/codelite.layout)
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/codelite.layout)
                     
         install(FILES ${CL_SRC_ROOT}/Runtime/config/codelite.layout.default 
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/codelite.layout)
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/codelite.layout)
 
         install(DIRECTORY ${CL_SRC_ROOT}/sdk/codelite_cppcheck/cfg/
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config/cppcheck/
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config/cppcheck/
                 FILES_MATCHING PATTERN "*.cfg"
                 )
         
-        install(DIRECTORY ${CL_SRC_ROOT}/Runtime/ DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/
+        install(DIRECTORY ${CL_SRC_ROOT}/Runtime/ DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/
                 FILES_MATCHING PATTERN "*.zip")
         
         install(FILES ${CL_SRC_ROOT}/Runtime/config/build_settings.xml.default.mac 
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config/
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config/
                 RENAME build_settings.xml.default)
 
         install(FILES ${CL_SRC_ROOT}/Runtime/config/plugins.xml.default
                 DESTINATION 
-                    ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config/)
-        install(FILES ${CL_SRC_ROOT}/LICENSE DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport)
+                    ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config/)
+        install(FILES ${CL_SRC_ROOT}/LICENSE DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport)
         
         install(FILES ${CL_SRC_ROOT}/Runtime/config/codelite.xml.default.mac 
-                DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config
+                DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config
                 RENAME codelite.xml.default)
                 
         install(FILES ${CL_SRC_ROOT}/Runtime/config/debuggers.xml.mac 
-                DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/config
+                DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config
                 RENAME debuggers.xml.default)
                 
 #        execute_process(COMMAND 
 #                        install_name_tool -change @rpath/libclang.dylib @executable_path/../MacOS/libclang.dylib 
-#                        ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/codelite)
+#                        ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite)
     endif()
 endmacro()
 

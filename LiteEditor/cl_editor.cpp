@@ -1455,8 +1455,8 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
             if(wxMessageBox(wxString::Format(wxT("'%s' \n%s"),
                                              fileName.GetFullPath().c_str(),
                                              _("has the read-only attribute set"),
-                                             _("Would you like CodeLite to try and remove it?")),
-                            _("CodeLite"),
+                                             _("Would you like Sowicm's Codepad to try and remove it?")),
+                            _("Sowicm's Codepad"),
                             wxYES_NO | wxICON_QUESTION | wxCENTER) == wxYES) {
                 // try to clear the read-only flag from the file
                 if(SetFileAttributes(fileName.GetFullPath().c_str(), dwAttrs & ~(FILE_ATTRIBUTE_READONLY)) == FALSE) {
@@ -1464,7 +1464,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
                                                   _("Failed to open file"),
                                                   fileName.GetFullPath().c_str(),
                                                   _("for write")),
-                                 _("CodeLite"),
+                                 _("Sowicm's Codepad"),
                                  wxOK | wxCENTER | wxICON_WARNING);
                     return false;
                 }
@@ -1512,7 +1512,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
                                          fileName.GetFullPath().GetData(),
                                          _("for write"),
                                          _("Override it?")),
-                        _("CodeLite"),
+                        _("Sowicm's Codepad"),
                         wxYES_NO | wxICON_WARNING) == wxYES) {
             // try to override it
             time_t curt = GetFileModificationTime(fileName.GetFullPath());
@@ -1520,7 +1520,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
             if(file.Open(tmp_file.c_str(), wxT("wb")) == false) {
                 wxMessageBox(
                     wxString::Format(wxT("%s '%s' %s"), _("Failed to open file"), tmp_file.c_str(), _("for write")),
-                    _("CodeLite"),
+                    _("Sowicm's Codepad"),
                     wxOK | wxICON_WARNING);
                 return false;
             }
@@ -1535,7 +1535,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
                                       _("Save file failed!"),
                                       _("Could not convert the file to the requested encoding"),
                                       wxFontMapper::GetEncodingName(GetOptions()->GetFileFontEncoding()).c_str()),
-                     _("CodeLite"),
+                     _("Sowicm's Codepad"),
                      wxOK | wxICON_WARNING);
         return false;
     }
@@ -1545,7 +1545,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
         wxString errmsg;
         errmsg << _("File text conversion failed!\nCheck your file font encoding from\nSettings | Global Editor "
                     "Prefernces | Misc | Locale");
-        wxMessageBox(errmsg, "CodeLite", wxOK | wxICON_ERROR | wxCENTER, wxTheApp->GetTopWindow());
+        wxMessageBox(errmsg, "Sowicm's Codepad", wxOK | wxICON_ERROR | wxCENTER, wxTheApp->GetTopWindow());
         return false;
     }
 
@@ -1561,7 +1561,7 @@ bool LEditor::SaveToFile(const wxFileName& fileName)
     if(tmp_file.IsEmpty() == false) {
         if(wxRenameFile(tmp_file, fileName.GetFullPath(), true) == false) {
             wxMessageBox(
-                wxString::Format(_("Failed to override read-only file")), _("CodeLite"), wxOK | wxICON_WARNING);
+                wxString::Format(_("Failed to override read-only file")), _("Sowicm's Codepad"), wxOK | wxICON_WARNING);
             return false;
         } else {
 // override was successful, restore execute permissions
@@ -1694,7 +1694,7 @@ void LEditor::CodeComplete(bool refreshingList)
 }
 
 //----------------------------------------------------------------
-// Demonstrate how to achieve symbol browsing using the CodeLite
+// Demonstrate how to achieve symbol browsing using the Sowicm's Codepad
 // library, in addition we implements here a memory for allowing
 // user to go back and forward
 //----------------------------------------------------------------
@@ -2167,7 +2167,7 @@ void LEditor::OnFindDialog(wxCommandEvent& event)
 
                 // popup a message
                 wxMessageBox(_("Can not find the string '") + m_findReplaceDlg->GetData().GetFindString() + wxT("'"),
-                             _("CodeLite"),
+                             _("Sowicm's Codepad"),
                              wxICON_WARNING | wxOK);
             }
         }
@@ -2202,7 +2202,7 @@ void LEditor::FindNext(const FindReplaceData& data)
             // Kill the "...continued from start" statusbar message
             m_mgr->GetStatusBar()->SetMessage("");
             ::wxMessageBox(
-                _("Can not find the string '") + data.GetFindString() + wxT("'"), _("CodeLite"), wxOK | wxICON_WARNING);
+                _("Can not find the string '") + data.GetFindString() + wxT("'"), _("Sowicm's Codepad"), wxOK | wxICON_WARNING);
         }
     } else {
         // The string *was* found, without needing to restart from the top

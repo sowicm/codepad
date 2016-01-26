@@ -10,8 +10,8 @@ fi
 # Clear old installers
 os_name=`uname -s`
 if [ ${os_name} == "Darwin" ]; then
-    echo rm -f codelite.app.tar.gz
-    rm -f codelite.app.tar.gz
+    echo rm -f Codepad.app.tar.gz
+    rm -f Codepad.app.tar.gz
 else
     echo rm -fr *.deb
     rm -fr *.deb
@@ -29,8 +29,8 @@ cd ../wxcrafter && git pull --rebase && cd ../build-release
 if [ ${os_name} == "Darwin" ]; then
     cmake -DCMAKE_BUILD_TYPE=Release .. -DWITH_PCH=1
     make -j4 && make install
-    tar cvfz codelite.app.tar.gz codelite.app/*
-    scp codelite.app.tar.gz root@34.baidu.com:/var/www/downloads/codelite/weekly/wip
+    tar cvfz Codepad.app.tar.gz Codepad.app/*
+    scp Codepad.app.tar.gz root@34.baidu.com:/var/www/downloads/codelite/weekly/wip
 else
     cmake -DCMAKE_BUILD_TYPE=Release -DMAKE_DEB=1 -DCOPY_WX_LIBS=1 ..
     make -j4 && make package

@@ -33,7 +33,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 #############################################
 ## Defaults
 #############################################
-project( "CodeLite" )
+project( "Sowicm's Codepad" )
 
 ## Generate compile_commands.json file for code completion
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
@@ -388,10 +388,10 @@ if ( MAKE_DEB )
     endif ()
 
     set(CPACK_GENERATOR                   "DEB")
-    set(CPACK_PACKAGE_NAME                "CodeLite")
-    set(CPACK_PACKAGE_VERSION             "9.1.0")
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER   "Eran Ifrah <eran.ifrah@gmail.com>")
-    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C/C++/PHP and Node.js IDE (Integrated Development Environment)")
+    set(CPACK_PACKAGE_NAME                "Sowicm's Codepad")
+    set(CPACK_PACKAGE_VERSION             "2.0.0")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER   "Sowicm Right")
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C/C++ IDE (Integrated Development Environment)")
     set(CPACK_DEBIAN_PACKAGE_SECTION      "devel")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY     "optional")
     set(CPACK_DEBIAN_PACKAGE_RECOMMENDS   "build-essential, git, subversion, gdb, xterm, gcc, g++")
@@ -579,7 +579,7 @@ add_dependencies(databaselayersqlite wxsqlite3)
 add_dependencies(wxshapeframework wxsqlite3)
 add_dependencies(libcodelite wxshapeframework databaselayersqlite wxsqlite3)
 add_dependencies(plugin libcodelite)
-add_dependencies(codelite plugin)
+add_dependencies(Codepad plugin)
 
 ## Include our custom plugin.cmake module
 include(plugin)

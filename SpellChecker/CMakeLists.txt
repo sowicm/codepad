@@ -88,7 +88,7 @@ else ()
     if(APPLE)
         install(
           DIRECTORY ${CL_SRC_ROOT}/SpellChecker/dics
-          DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/SharedSupport/dics
+          DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/dics
           USE_SOURCE_PERMISSIONS
           PATTERN ".svn" EXCLUDE
           PATTERN ".git" EXCLUDE
@@ -97,7 +97,7 @@ else ()
         # Install Hunspell library
         install(
           FILES ${LIBHUNSPELL}
-          DESTINATION ${CMAKE_BINARY_DIR}/codelite.app/Contents/MacOS/
+          DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/
         )
     else()
         install(

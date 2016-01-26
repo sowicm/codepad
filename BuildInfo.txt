@@ -80,7 +80,7 @@ Next, build codelite:
  
  ... codelite will compile and will create a bundle, to run it:
  
- $> open build-release/pack/codelite.app/
+ $> open build-release/pack/Codepad.app/
  
 
 Enjoy,
