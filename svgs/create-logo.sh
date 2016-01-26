@@ -1,5 +1,8 @@
 #!/bin/bash
 
+./create-png-logo.sh
+exit
+
 file=codelite-logo.svg
 filename=codelite-logo
 

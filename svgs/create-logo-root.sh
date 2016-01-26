@@ -1,4 +1,8 @@
 #!/bin/bash
+
+./create-png-logo-root.sh
+exit
+
 filename=codelite-logo-root
 
 mkdir -p ../bitmaps/osx/icon.iconset
