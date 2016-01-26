@@ -35,6 +35,8 @@
 #include "imanager.h"
 #include "clStatusBar.h"
 #include <wx/xrc/xmlres.h>
+#include "plugin_general_wxcp.h"
+
 
 // --------------------------------------------
 
@@ -72,6 +74,14 @@ clAuiDockArt::clAuiDockArt(IManager* manager)
     m_dockMoreBmp = wxXmlResource::Get()->LoadBitmap("aui-more");
     m_dockExpandeBmp = wxXmlResource::Get()->LoadBitmap("aui-expand");
     m_dockMinimizeBmp = wxXmlResource::Get()->LoadBitmap("aui-minimize");
+
+    //m_runButtonBitmap = wxXmlResource::Get()->LoadBitmap("runButton");
+        GeneralImages img;
+    m_runButtonBitmap = img.Bitmap("runButton");
+    m_runButtonHoverBitmap = img.Bitmap("runButtonHover");
+    m_runButtonActiveBitmap = img.Bitmap("runButtonActive");
+
+
 }
 
 clAuiDockArt::~clAuiDockArt() {}
@@ -96,6 +106,81 @@ void clAuiDockArt::DrawPaneButton(
     case wxAUI_BUTTON_PIN:
         dc.DrawBitmap(m_dockMoreBmp, xx, yy);
         break;
+    case wxAUI_BUTTON_CUSTOM1:
+    {
+        wxBitmap bmp;
+
+        switch (button_state)
+        {
+            default:
+            case wxAUI_BUTTON_STATE_NORMAL:
+                bmp = m_runButtonBitmap;//wxXmlResource::Get()->LoadBitmap(wxT("tabClose"));
+                break;
+
+            case wxAUI_BUTTON_STATE_HOVER:
+                bmp = m_runButtonHoverBitmap;
+                break;
+
+            case wxAUI_BUTTON_STATE_PRESSED:
+                bmp = m_runButtonActiveBitmap;
+                break;
+        }
+
+        wxRect& rect = const_cast<wxRect&>(_rect);
+
+//static int stopChange = 0;
+
+//        wxRect& rect = part.rect;
+
+//        if (button_state == wxAUI_BUTTON_STATE_HOVER ||
+//            button_state == wxAUI_BUTTON_STATE_PRESSED)
+//        {
+//            stopChange = 1;
+//        }
+
+//        if (!stopChange)
+//        {
+            int old_y = rect.y;
+            rect.y = rect.y + (rect.height/2) - (bmp.GetHeight()/2);
+            //rect.height = old_y + rect.height - rect.y - 1;
+            rect.x = pane.rect.width - bmp.GetWidth() - 20;//rect.x - bmp.GetWidth();
+            rect.width = bmp.GetWidth();
+            rect.height = bmp.GetHeight();
+            //first_time = 0;
+//        }
+
+
+
+/*
+        if (button_state == wxAUI_BUTTON_STATE_PRESSED)
+        {
+            rect.x++;
+            rect.y++;
+        }
+
+        if (button_state == wxAUI_BUTTON_STATE_HOVER ||
+            button_state == wxAUI_BUTTON_STATE_PRESSED)
+        {
+            if (pane.state & wxAuiPaneInfo::optionActive)
+            {
+                dc->SetBrush(wxBrush(m_activeCaptionColour.ChangeLightness(120)));
+                dc->SetPen(wxPen(m_activeCaptionColour.ChangeLightness(70)));
+            }
+            else
+            {
+                dc->SetBrush(wxBrush(m_inactiveCaptionColour.ChangeLightness(120)));
+                dc->SetPen(wxPen(m_inactiveCaptionColour.ChangeLightness(70)));
+            }
+
+            // draw the background behind the button
+            dc->DrawRectangle(rect.x, rect.y, 15, 15);
+        }
+*/
+
+        // draw the button itself
+        dc.DrawBitmap(bmp, rect.x, rect.y, true);
+        break;
+    }
     default:
         wxAuiDefaultDockArt::DrawPaneButton(dc, window, button, button_state, _rect, pane);
         break;

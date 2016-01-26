@@ -756,4 +756,7 @@ wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_CL, wxEVT_SHOW_OUTPUT_TAB, clCommandEvent);
 // Use: event.GetClientData() to get the pointer to the window page
 wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_CL, wxEVT_PAGE_MODIFIED_UPDATE_UI, clCommandEvent);
 
+wxDECLARE_EXPORTED_EVENT(WXDLLIMPEXP_CL, wxEVT_BUILD_AND_EXECUTE, clCommandEvent);
+
+
 #endif // CODELITE_EVENTS_H

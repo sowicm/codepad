@@ -766,6 +766,10 @@ clMainFrame::clMainFrame(
     EventNotifier::Get()->Bind(wxEVT_DEBUG_STARTED, &clMainFrame::OnDebugStarted, this);
     EventNotifier::Get()->Bind(wxEVT_DEBUG_ENDED, &clMainFrame::OnDebugEnded, this);
 
+    //EventNotifier::Get()->Bind(wxEVT_BUILD_AND_EXECUTE, &clMainFrame::OnExecuteNoDebug, this);
+    EventNotifier::Get()->Connect(wxEVT_BUILD_AND_EXECUTE, wxCommandEventHandler(clMainFrame::OnExecuteNoDebug), NULL, this);
+
+
     // Start the code completion manager, we do this by calling it once
     CodeCompletionManager::Get();
 
@@ -1060,6 +1064,11 @@ void clMainFrame::CreateGUIControls()
 
     m_outputPane = new OutputPane(m_mainPanel, wxT("Output"));
     wxAuiPaneInfo paneInfo;
+
+    wxAuiPaneButton buttonRun;
+    buttonRun.button_id = wxAUI_BUTTON_CUSTOM1;//wxAUI_BUTTON_PIN;
+    paneInfo.buttons.Add(buttonRun);
+
     m_mgr.AddPane(m_outputPane, paneInfo.CaptionVisible(true)
                                     //.PinButton()
                                     .Name(wxT("Output"))

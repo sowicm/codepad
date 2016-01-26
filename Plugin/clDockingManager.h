@@ -38,6 +38,8 @@ protected:
     
     void ShowWorkspaceOpenTabMenu();
     void ShowOutputViewOpenTabMenu();
+
+    void BuildAndExecute();
     
     /**
      * @brief show a popup menu and return the selected string
