@@ -48,8 +48,6 @@ protected:
 public:
     clDockingManager();
     virtual ~clDockingManager();
-
-    wxBitmap m_runButtonBitmap;
 };
 
 #endif // CLDOCKINGMANAGER_H

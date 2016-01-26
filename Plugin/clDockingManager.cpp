@@ -14,14 +14,140 @@
 #define WORKSPACE_VIEW "Workspace View"
 #define OUTPUT_VIEW "Output View"
 
+class WXDLLIMPEXP_AUI clDockingArt : public wxAuiDefaultDockArt
+{
+public:
+//    clDockingArt();
+    void DrawPaneButton(wxDC& dc,
+                  wxWindow *window,
+                  int button,
+                  int buttonState,
+                  const wxRect& rect,
+                  wxAuiPaneInfo& pane);
+
+protected:
+    void InitBitmaps();
+
+    wxBitmap m_runButtonBitmap;
+
+};
+
+void clDockingArt::InitBitmaps()
+{
+    wxAuiDefaultDockArt::InitBitmaps();
+
+    GeneralImages img;
+    m_runButtonBitmap = img.Bitmap("runButton");
+}
+
+void clDockingArt::DrawPaneButton(wxDC& dc, wxWindow *window,
+                                      int button,
+                                      int button_state,
+                                      const wxRect& _rect,
+                                      wxAuiPaneInfo& pane)
+{
+    throw "error";
+    if (button != wxAUI_BUTTON_CUSTOM1)
+    {
+        wxAuiDefaultDockArt::DrawPaneButton(dc, window, button, button_state, _rect, pane);
+        return;
+    }
+
+
+        wxBitmap bmp = m_runButtonBitmap;//wxXmlResource::Get()->LoadBitmap(wxT("tabClose"));
+
+        /*
+        switch (button)
+        {
+            default:
+            case wxAUI_BUTTON_CLOSE:
+                if (pane.state & wxAuiPaneInfo::optionActive)
+                    bmp = m_activeCloseBitmap;
+                else
+                    bmp = m_inactiveCloseBitmap;
+                break;
+            case wxAUI_BUTTON_PIN:
+                if (pane.state & wxAuiPaneInfo::optionActive)
+                    bmp = m_activePinBitmap;
+                else
+                    bmp = m_inactivePinBitmap;
+                break;
+            case wxAUI_BUTTON_MAXIMIZE_RESTORE:
+                if (pane.IsMaximized())
+                {
+                    if (pane.state & wxAuiPaneInfo::optionActive)
+                        bmp = m_activeRestoreBitmap;
+                    else
+                        bmp = m_inactiveRestoreBitmap;
+                }
+                else
+                {
+                    if (pane.state & wxAuiPaneInfo::optionActive)
+                        bmp = m_activeMaximizeBitmap;
+                    else
+                        bmp = m_inactiveMaximizeBitmap;
+                }
+                break;
+        }
+        */
+
+static int stopChange = 0;
+
+        wxRect rect = _rect;
+
+        if (!stopChange)
+        {
+            int old_y = rect.y;
+            rect.y = rect.y + (rect.height/2) - (bmp.GetHeight()/2);
+            //rect.height = old_y + rect.height - rect.y - 1;
+            rect.x = rect.x - bmp.GetWidth();
+            rect.width = bmp.GetWidth();
+            rect.height = bmp.GetHeight();
+            //first_time = 0;
+        }
+
+/*
+        if (button_state == wxAUI_BUTTON_STATE_PRESSED)
+        {
+            rect.x++;
+            rect.y++;
+        }
+
+        if (button_state == wxAUI_BUTTON_STATE_HOVER ||
+            button_state == wxAUI_BUTTON_STATE_PRESSED)
+        {
+            if (pane.state & wxAuiPaneInfo::optionActive)
+            {
+                dc->SetBrush(wxBrush(m_activeCaptionColour.ChangeLightness(120)));
+                dc->SetPen(wxPen(m_activeCaptionColour.ChangeLightness(70)));
+            }
+            else
+            {
+                dc->SetBrush(wxBrush(m_inactiveCaptionColour.ChangeLightness(120)));
+                dc->SetPen(wxPen(m_inactiveCaptionColour.ChangeLightness(70)));
+            }
+
+            // draw the background behind the button
+            dc->DrawRectangle(rect.x, rect.y, 15, 15);
+        }
+*/
+
+        dc.DrawLabel(wxT("Run"), rect);
+
+        // draw the button itself
+        dc.DrawBitmap(bmp, rect.x, rect.y, true);
+
+
+}
+
+
 clDockingManager::clDockingManager()
 {
     Bind(wxEVT_AUI_PANE_BUTTON, &clDockingManager::OnButtonClicked, this);
     Bind(wxEVT_AUI_RENDER, &clDockingManager::OnRender, this);
 
-    GeneralImages img;
-    m_runButtonBitmap = img.Bitmap("runButton");
-
+    delete m_art;
+    m_art = new clDockingArt;
 }
 
 clDockingManager::~clDockingManager()
@@ -30,147 +156,7 @@ clDockingManager::~clDockingManager()
     Unbind(wxEVT_AUI_RENDER, &clDockingManager::OnRender, this);
 }
 
-void clDockingManager::OnRender(wxAuiManagerEvent& evt)
-{
-    evt.Veto();
-    evt.Skip(false);
-    // if the frame is about to be deleted, don't bother
-    if (!m_frame || wxPendingDelete.Member(m_frame))
-        return;
-
-    wxDC* dc = evt.GetDC();
-
-#ifdef __WXMAC__
-    dc->Clear() ;
-#endif
-    int i, part_count;
-    for (i = 0, part_count = m_uiParts.GetCount();
-         i < part_count; ++i)
-    {
-        wxAuiDockUIPart& part = m_uiParts.Item(i);
-
-        // don't draw hidden pane items or items that aren't windows
-        if (part.sizer_item && ((!part.sizer_item->IsWindow() && !part.sizer_item->IsSpacer() && !part.sizer_item->IsSizer()) || !part.sizer_item->IsShown()))
-            continue;
-
-        switch (part.type)
-        {
-            case wxAuiDockUIPart::typeDockSizer:
-            case wxAuiDockUIPart::typePaneSizer:
-                m_art->DrawSash(*dc, m_frame, part.orientation, part.rect);
-                break;
-            case wxAuiDockUIPart::typeBackground:
-                m_art->DrawBackground(*dc, m_frame, part.orientation, part.rect);
-                break;
-            case wxAuiDockUIPart::typeCaption:
-                m_art->DrawCaption(*dc, m_frame, part.pane->caption, part.rect, *part.pane);
-                break;
-            case wxAuiDockUIPart::typeGripper:
-                m_art->DrawGripper(*dc, m_frame, part.rect, *part.pane);
-                break;
-            case wxAuiDockUIPart::typePaneBorder:
-                m_art->DrawBorder(*dc, m_frame, part.rect, *part.pane);
-                break;
-            case wxAuiDockUIPart::typePaneButton:
-            {
-                if (part.button->button_id != wxAUI_BUTTON_CUSTOM1)
-                {
-                    m_art->DrawPaneButton(*dc, m_frame, part.button->button_id,
-                        wxAUI_BUTTON_STATE_NORMAL, part.rect, *part.pane);
-                    break;
-                }
-
-
-                wxBitmap bmp = m_runButtonBitmap;//wxXmlResource::Get()->LoadBitmap(wxT("tabClose"));
-
-                /*
-                switch (button)
-                {
-                    default:
-                    case wxAUI_BUTTON_CLOSE:
-                        if (pane.state & wxAuiPaneInfo::optionActive)
-                            bmp = m_activeCloseBitmap;
-                        else
-                            bmp = m_inactiveCloseBitmap;
-                        break;
-                    case wxAUI_BUTTON_PIN:
-                        if (pane.state & wxAuiPaneInfo::optionActive)
-                            bmp = m_activePinBitmap;
-                        else
-                            bmp = m_inactivePinBitmap;
-                        break;
-                    case wxAUI_BUTTON_MAXIMIZE_RESTORE:
-                        if (pane.IsMaximized())
-                        {
-                            if (pane.state & wxAuiPaneInfo::optionActive)
-                                bmp = m_activeRestoreBitmap;
-                            else
-                                bmp = m_inactiveRestoreBitmap;
-                        }
-                        else
-                        {
-                            if (pane.state & wxAuiPaneInfo::optionActive)
-                                bmp = m_activeMaximizeBitmap;
-                            else
-                                bmp = m_inactiveMaximizeBitmap;
-                        }
-                        break;
-                }
-                */
-
-static int stopChange = 0;
-
-                wxRect& rect = part.rect;
-
-                if (!stopChange)
-                {
-                    int old_y = rect.y;
-                    rect.y = rect.y + (rect.height/2) - (bmp.GetHeight()/2);
-                    //rect.height = old_y + rect.height - rect.y - 1;
-                    rect.x = rect.x - bmp.GetWidth();
-                    rect.width = bmp.GetWidth();
-                    rect.height = bmp.GetHeight();
-                    //first_time = 0;
-                }
-
-/*
-                if (button_state == wxAUI_BUTTON_STATE_PRESSED)
-                {
-                    rect.x++;
-                    rect.y++;
-                }
-
-                if (button_state == wxAUI_BUTTON_STATE_HOVER ||
-                    button_state == wxAUI_BUTTON_STATE_PRESSED)
-                {
-                    if (pane.state & wxAuiPaneInfo::optionActive)
-                    {
-                        dc->SetBrush(wxBrush(m_activeCaptionColour.ChangeLightness(120)));
-                        dc->SetPen(wxPen(m_activeCaptionColour.ChangeLightness(70)));
-                    }
-                    else
-                    {
-                        dc->SetBrush(wxBrush(m_inactiveCaptionColour.ChangeLightness(120)));
-                        dc->SetPen(wxPen(m_inactiveCaptionColour.ChangeLightness(70)));
-                    }
-
-                    // draw the background behind the button
-                    dc->DrawRectangle(rect.x, rect.y, 15, 15);
-                }
-*/
-
-                dc->DrawLabel(wxT("Run"), rect);
-
-                // draw the button itself
-                dc->DrawBitmap(bmp, rect.x, rect.y, true);
-
-
-                break;
-
-            }
-        }
-    }
-}
+void clDockingManager::OnRender(wxAuiManagerEvent& event) { event.Skip(); }
 
 void clDockingManager::OnButtonClicked(wxAuiManagerEvent& event)
 {
