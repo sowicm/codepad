@@ -289,6 +289,10 @@ void NewBuildTab::OnBuildStarted(clCommandEvent& e)
         buildEvent.SetConfigurationName(bed->GetConfiguration());
         EventNotifier::Get()->AddPendingEvent(buildEvent);
     }
+    if (!m_cmp)
+    {
+        BuildSettingsConfigST::Get()->GetCompiler(wxT("gcc"));
+    }
 }
 
 void NewBuildTab::OnBuildAddLine(clCommandEvent& e)
@@ -543,6 +547,28 @@ void NewBuildTab::DoProcessOutput(bool compilationEnded, bool isSummaryLine)
             buildLine.Prepend("====");
             buildLine.Append("====");
             buildLineInfo->SetSeverity(SV_NONE);
+        }
+
+        if (buildLine.Contains("error: expected ';'"))
+        {
+            buildLine.insert(buildLine.Length() - 1, (wxT("（有句子没打分号）")));
+            //buildLineInfo->SetSeverity(SV_ERROR);
+        }
+        else if (buildLine.Contains("error: expected ')")
+            ||   buildLine.Contains("error: expected '}"))
+        {
+            buildLine.insert(buildLine.Length() - 1, (wxT("（有括号没括回来）")));
+            //buildLineInfo->SetSeverity(SV_ERROR);
+        }
+        else if (buildLine.Contains("error: use of undeclared"))
+        {
+            buildLine.insert(buildLine.Length() - 1, (wxT("（没有声明变量）")));
+            //buildLineInfo->SetSeverity(SV_ERROR);
+        }
+        else if (buildLine.Contains("error: non-ASCII "))
+        {
+            buildLine.insert(buildLine.Length() - 1, (wxT("（是不是用了中文标点）")));
+            //buildLineInfo->SetSeverity(SV_ERROR);
         }
 
         // Keep the line number in the build tab
@@ -858,6 +884,20 @@ void NewBuildTab::OnStyleNeeded(wxStyledTextEvent& event)
         }
         ++curline;
     }
+
+    /*
+    for(size_t i = 0; i < lines.size(); ++i) {
+        const wxString& strLine = lines.Item(i);
+        if (strLine.Contains("分号") ||
+            strLine.Contains("括号") ||
+            strLine.Contains("声明") ||
+            strLine.Contains("定义") ||
+            strLine.Contains("标点"))
+        {
+            m_view->SetStyling(strLine.length(), LEX_GCC_ERROR);
+        }
+    }
+    */
 }
 
 void NewBuildTab::InitView(const wxString& theme)
@@ -1007,12 +1047,19 @@ CmpPatternPtr NewBuildTab::GetMatchingRegex(const wxString& lineText, LINE_SEVER
         bool isWarning = false;
 
         if(!m_cmp) {
-            severity = SV_NONE;
-            return NULL;
+            //throw "error";
+            //severity = SV_NONE;
+            //return NULL;
+            m_cmp = BuildSettingsConfigST::Get()->GetCompiler("gnu gcc");
+            // if (!m_cmp)
+            // {
+            //     throw "error";
+            // }
         }
 
         CmpPatterns cmpPatterns;
         if(!DoGetCompilerPatterns(m_cmp->GetName(), cmpPatterns)) {
+//            throw "error";
             severity = SV_NONE;
             return NULL;
         }
