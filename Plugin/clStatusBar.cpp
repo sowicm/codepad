@@ -111,7 +111,9 @@ void clStatusBar::OnPageChanged(wxCommandEvent& event)
             language = lexer->GetName().Upper();
         }
         // Set the "TABS/SPACES" field
-        SetWhitespaceInfo(editor->GetCtrl()->GetUseTabs() ? "tabs" : "spaces");
+        wxString indent = editor->GetCtrl()->GetUseTabs() ? "tabs" : "spaces";
+        indent << ": " << editor->GetCtrl()->GetIndent();
+        SetWhitespaceInfo(indent);
     }
     SetLanguage(language);
 }
@@ -368,7 +370,9 @@ void clStatusBar::OnFieldClicked(clCommandEvent& event)
                 options->SetIndentUsesTabs(true);
                 EditorConfigST::Get()->SetOptions(options);
             }
-            SetWhitespaceInfo(stc->GetUseTabs() ? "tabs" : "spaces");
+            wxString indent = stc->GetUseTabs() ? "tabs" : "spaces";
+            indent << ": " << stc->GetIndent();
+            SetWhitespaceInfo(indent);
         }
     }
 }
@@ -378,7 +382,7 @@ void clStatusBar::SetWhitespaceInfo(const wxString& whitespaceInfo)
     wxCustomStatusBarField::Ptr_t field = GetField(STATUSBAR_WHITESPACE_INFO_IDX);
     CHECK_PTR_RET(field);
 
-    wxString ws = whitespaceInfo.Upper();
+    wxString ws = whitespaceInfo.Capitalize();
     field->Cast<wxCustomStatusBarFieldText>()->SetText(ws);
     field->SetTooltip(ws);
 }
