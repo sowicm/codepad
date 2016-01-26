@@ -61,24 +61,6 @@ void clDockingManager::BuildAndExecute()
     EventNotifier::Get()->AddPendingEvent(event);
 }
 
-void clDockingManager::DoFrameLayout()
-{
-    throw "error";
-    wxAuiManager::DoFrameLayout();
-    for (int i = 0, part_count = m_uiParts.GetCount(); i < part_count; ++i)
-    {
-        wxAuiDockUIPart& part = m_uiParts.Item(i);
-        if (part.type == wxAuiDockUIPart::typePaneButton && part.button->button_id == wxAUI_BUTTON_CUSTOM1)
-        {
-            wxRect& rect = part.rect;
-            rect.x = rect.x - 75;//bmp.GetWidth();
-            rect.width = 16;//bmp.GetWidth();
-            rect.height = 75;//bmp.GetHeight();
-            //first_time = 0;
-        }
-    }
-}
-
 void clDockingManager::ShowWorkspaceOpenTabMenu()
 {
     // Override the "pin" button to show a window list
