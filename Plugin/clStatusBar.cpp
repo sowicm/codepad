@@ -73,8 +73,8 @@ clStatusBar::clStatusBar(wxWindow* parent, IManager* mgr)
     wxCustomStatusBarField::Ptr_t buildStatus(new wxCustomStatusBarBitmapField(this, 0));
     AddField(buildStatus);
 
-    wxCustomStatusBarField::Ptr_t timeclock(new wxCustomStatusBarFieldText(this, 100));
-    AddField(timeclock);
+//    wxCustomStatusBarField::Ptr_t timeclock(new wxCustomStatusBarFieldText(this, 100));
+//    AddField(timeclock);
 
 
     m_bmpBuildError = wxXmlResource::Get()->LoadBitmap("build-error");
