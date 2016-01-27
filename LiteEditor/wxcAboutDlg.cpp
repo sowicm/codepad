@@ -30,12 +30,16 @@ AboutDlgBase::AboutDlgBase(wxWindow* parent, wxWindowID id, const wxString& titl
     
     mainSizer->Add(boxSizer23, 1, wxALL|wxEXPAND, 5);
     
+    boxSizer23->Add(0, 0, 1, wxALL, 5);
+    
     m_staticText5 = new wxStaticText(this, wxID_ANY, _("Sowicm's Codepad"), wxDefaultPosition, wxSize(-1,-1), wxALIGN_CENTRE);
     m_staticText5->SetForegroundColour(wxColour(wxT("rgb(255,255,255)")));
     wxFont m_staticText5Font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT(".SF NS Text"));
     m_staticText5->SetFont(m_staticText5Font);
     
     boxSizer23->Add(m_staticText5, 0, wxALL|wxEXPAND, 5);
+    
+    boxSizer23->Add(0, 0, 1, wxALL, 5);
     
     wxBoxSizer* boxSizer25 = new wxBoxSizer(wxVERTICAL);
     
@@ -44,6 +48,8 @@ AboutDlgBase::AboutDlgBase(wxWindow* parent, wxWindowID id, const wxString& titl
     wxBoxSizer* boxSizer27 = new wxBoxSizer(wxHORIZONTAL);
     
     mainSizer->Add(boxSizer27, 1, wxALL|wxEXPAND, 5);
+    
+    boxSizer27->Add(0, 0, 1, wxALL, 5);
     
     wxFlexGridSizer* flexGridSizer21 = new wxFlexGridSizer(0, 1, 0, 0);
     flexGridSizer21->SetFlexibleDirection( wxBOTH );
@@ -69,10 +75,12 @@ AboutDlgBase::AboutDlgBase(wxWindow* parent, wxWindowID id, const wxString& titl
     
     fgSizer1->Add(m_hyperLink9, 0, wxALL, 5);
     
+    boxSizer27->Add(0, 0, 1, wxALL, 5);
+    
     SetBackgroundColour(wxColour(wxT("rgb(64,64,64)")));
     SetForegroundColour(wxColour(wxT("rgb(64,64,64)")));
     SetName(wxT("AboutDlgBase"));
-    SetSizeHints(-1,-1);
+    SetSizeHints(320,150);
     if ( GetSizer() ) {
          GetSizer()->Fit(this);
     }

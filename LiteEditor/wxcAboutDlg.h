@@ -36,7 +36,7 @@ public:
     wxStaticText* GetStaticText5() { return m_staticText5; }
     wxStaticText* GetStaticText13() { return m_staticText13; }
     wxHyperlinkCtrl* GetHyperLink9() { return m_hyperLink9; }
-    AboutDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Sowicm's Codepad"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(-1, -1), long style = wxDEFAULT_DIALOG_STYLE);
+    AboutDlgBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Sowicm's Codepad"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(320,150), long style = wxDEFAULT_DIALOG_STYLE);
     virtual ~AboutDlgBase();
 };
 

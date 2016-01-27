@@ -1903,6 +1903,7 @@ void clMainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
     AboutDlg dlg(this, mainTitle);
     dlg.SetInfo(mainTitle);
+    dlg.SetSize(wxSize(320,150));
     dlg.ShowModal();
 }
 
