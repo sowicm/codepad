@@ -389,10 +389,6 @@
     <File Name="cl_aui_tool_stickness.cpp"/>
     <File Name="art_metro.cpp"/>
     <File Name="art_metro.h"/>
-    <File Name="clBoostrapWizardPage.h"/>
-    <File Name="clBoostrapWizardPage.cpp"/>
-    <File Name="clBootstrapWizard.h"/>
-    <File Name="clBootstrapWizard.cpp"/>
     <File Name="clWorkspaceView.h"/>
     <File Name="clWorkspaceView.cpp"/>
     <File Name="clMouseCaptureLocker.h"/>
@@ -447,7 +443,6 @@
       <File Name="sftp_ui_sftp_bitmaps.cpp"/>
       <File Name="wxcrafter_plugin_bitmaps.cpp"/>
       <File Name="wxCodeCompletionBox_bitmaps.cpp"/>
-      <File Name="clBoostrapWizardBase_plugin_bitmaps.cpp"/>
       <File Name="WSImporterDlgs_plugin_bitmaps.cpp"/>
       <File Name="clSelectSymbolDialogBase_plugin_bitmaps.cpp"/>
       <File Name="nameanddescdlg_plugin_bitmaps.cpp"/>
@@ -463,8 +458,6 @@
       <File Name="wxcrafter_plugin.cpp"/>
       <File Name="wxCodeCompletionBoxBase.h"/>
       <File Name="wxCodeCompletionBoxBase.cpp"/>
-      <File Name="clBoostrapWizardBase.h"/>
-      <File Name="clBoostrapWizardBase.cpp"/>
       <File Name="WSImporterDlgs.h"/>
       <File Name="WSImporterDlgs.cpp"/>
       <File Name="openresourcedialogmodel.cpp"/>
@@ -475,7 +468,6 @@
     <File Name="openresourcedialogbase.wxcp"/>
     <File Name="plugin_general_wxcp.wxcp"/>
     <File Name="wxcrafter.wxcp"/>
-    <File Name="clBoostrapWizardBase.wxcp"/>
     <File Name="WSImporterDlgs.wxcp"/>
     <File Name="clSelectSymbolDialogBase.wxcp"/>
   </VirtualDirectory>
@@ -844,5 +836,10 @@
   <VirtualDirectory Name="NodeJS">
     <File Name="NodeJSLocator.h"/>
     <File Name="NodeJSLocator.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="wxJSON">
+    <File Name="jsonreader.cpp"/>
+    <File Name="jsonval.cpp"/>
+    <File Name="jsonwriter.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>
