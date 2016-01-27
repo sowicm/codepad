@@ -283,12 +283,8 @@
     <File Name="cl_standard_paths.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="ssh">
-    <File Name="cl_sftp.cpp"/>
-    <File Name="cl_sftp.h"/>
     <File Name="cl_ssh.cpp"/>
     <File Name="cl_ssh.h"/>
-    <File Name="cl_sftp_attribute.h"/>
-    <File Name="cl_sftp_attribute.cpp"/>
     <File Name="clSFTPEvent.h"/>
     <File Name="clSFTPEvent.cpp"/>
   </VirtualDirectory>

@@ -61,7 +61,7 @@ set( USE_CLANG 1 )
 set( IS_FREEBSD 0 )
 set( BUILD_WXC 0 )
 set( CL_COPY_WX_LIBS 0 )
-set( WITH_SFTP 1 )
+set( WITH_SFTP 0 )
 
 set (CMAKE_CXX_FLAGS -Wno-deprecated-declarations) # Avoid very multiple warnings spam due to deprecated wx methods
 
