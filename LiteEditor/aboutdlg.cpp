@@ -37,11 +37,12 @@ AboutDlg::AboutDlg( wxWindow* parent, const wxString &mainTitle )
     : AboutDlgBase( parent )
 {
     // set the page content
-    m_htmlWin3->SetPage(wxString::FromUTF8(about_hex));
-    m_buttonOk->SetFocus();
-    wxFileName license(ManagerST::Get()->GetInstallDir() + wxFileName::GetPathSeparator() + wxT("LICENSE"));
-    wxString licenseFullname = license.GetFullPath();
-    
+//    m_htmlWin3->SetPage(wxString::FromUTF8(about_hex));
+//    m_buttonOk->SetFocus();
+//    wxFileName license(ManagerST::Get()->GetInstallDir() + wxFileName::GetPathSeparator() + wxT("LICENSE"));
+//    wxString licenseFullname = license.GetFullPath();
+
+/*
     GetSizer()->Fit(this);
     if(license.FileExists()) {
         wxFFile fp(licenseFullname);
@@ -59,6 +60,7 @@ AboutDlg::AboutDlg( wxWindow* parent, const wxString &mainTitle )
             m_textCtrlLicense->SetEditable(false);
         }
     }
+*/
     CentreOnParent();
 }
 
@@ -68,12 +70,12 @@ AboutDlg::~AboutDlg()
 
 void AboutDlg::SetInfo(const wxString& info)
 {
-    m_staticTextInformation->SetLabel(info);
+    //m_staticTextInformation->SetLabel(info);
 }
 
 wxString AboutDlg::GetInfo() const
 {
-    return m_staticTextInformation->GetLabelText();
+    return "";//m_staticTextInformation->GetLabelText();
 }
 
 void AboutDlg::OnOK(wxCommandEvent& event)

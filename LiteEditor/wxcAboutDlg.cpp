@@ -26,113 +26,57 @@ AboutDlgBase::AboutDlgBase(wxWindow* parent, wxWindowID id, const wxString& titl
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(mainSizer);
     
-    m_notebook1 = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), 0);
-    m_notebook1->SetName(wxT("m_notebook1"));
+    wxBoxSizer* boxSizer23 = new wxBoxSizer(wxHORIZONTAL);
     
-    mainSizer->Add(m_notebook1, 1, wxALL|wxEXPAND, 5);
+    mainSizer->Add(boxSizer23, 1, wxALL|wxEXPAND, 5);
     
-    m_panel1 = new wxPanel(m_notebook1, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), wxTAB_TRAVERSAL);
-    m_notebook1->AddPage(m_panel1, _("About"), false);
+    m_staticText5 = new wxStaticText(this, wxID_ANY, _("Sowicm's Codepad"), wxDefaultPosition, wxSize(-1,-1), wxALIGN_CENTRE);
+    m_staticText5->SetForegroundColour(wxColour(wxT("rgb(255,255,255)")));
+    wxFont m_staticText5Font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT(".SF NS Text"));
+    m_staticText5->SetFont(m_staticText5Font);
     
-    wxBoxSizer* bSizer3 = new wxBoxSizer(wxVERTICAL);
-    m_panel1->SetSizer(bSizer3);
+    boxSizer23->Add(m_staticText5, 0, wxALL|wxEXPAND, 5);
     
-    m_bitmap = new wxStaticBitmap(m_panel1, wxID_ANY, wxXmlResource::Get()->LoadBitmap(wxT("cl-splash")), wxDefaultPosition, wxSize(-1, -1), 0 );
+    wxBoxSizer* boxSizer25 = new wxBoxSizer(wxVERTICAL);
     
-    bSizer3->Add(m_bitmap, 1, wxALL|wxEXPAND, 5);
+    mainSizer->Add(boxSizer25, 1, wxALL|wxEXPAND, 5);
     
-    m_panel4 = new wxPanel(m_notebook1, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), wxTAB_TRAVERSAL);
-    m_notebook1->AddPage(m_panel4, _("Credits"), false);
+    wxBoxSizer* boxSizer27 = new wxBoxSizer(wxHORIZONTAL);
     
-    wxBoxSizer* bSizer4 = new wxBoxSizer(wxVERTICAL);
-    m_panel4->SetSizer(bSizer4);
+    mainSizer->Add(boxSizer27, 1, wxALL|wxEXPAND, 5);
     
-    m_htmlWin3 = new wxHtmlWindow(m_panel4, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), wxHW_SCROLLBAR_AUTO);
-    m_htmlWin3->SetPage(wxT("<b>wxHtmlWindow control!</b>"));
+    wxFlexGridSizer* flexGridSizer21 = new wxFlexGridSizer(0, 1, 0, 0);
+    flexGridSizer21->SetFlexibleDirection( wxBOTH );
+    flexGridSizer21->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
     
-    bSizer4->Add(m_htmlWin3, 1, wxALL|wxEXPAND, 5);
-    
-    m_panel3 = new wxPanel(m_notebook1, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), wxTAB_TRAVERSAL);
-    m_notebook1->AddPage(m_panel3, _("License"), false);
-    
-    wxBoxSizer* bSizer5 = new wxBoxSizer(wxVERTICAL);
-    m_panel3->SetSizer(bSizer5);
-    
-    m_textCtrlLicense = new wxTextCtrl(m_panel3, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1, -1), wxTE_RICH2|wxTE_READONLY|wxTE_MULTILINE|wxTE_DONTWRAP);
-    
-    bSizer5->Add(m_textCtrlLicense, 1, wxALL|wxEXPAND, 5);
-    
-    wxStaticBoxSizer* sbSizer1 = new wxStaticBoxSizer( new wxStaticBox(this, wxID_ANY, wxT("")), wxVERTICAL);
-    
-    mainSizer->Add(sbSizer1, 0, wxALL|wxEXPAND, 5);
+    boxSizer27->Add(flexGridSizer21, 1, wxALL|wxEXPAND, 5);
     
     wxFlexGridSizer* fgSizer1 = new wxFlexGridSizer(0, 2, 0, 0);
     fgSizer1->SetFlexibleDirection( wxBOTH );
     fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
     
-    sbSizer1->Add(fgSizer1, 1, wxALL|wxEXPAND, 5);
+    flexGridSizer21->Add(fgSizer1, 1, wxALL|wxEXPAND, 5);
     
-    m_staticTextHomePage = new wxStaticText(this, wxID_ANY, _("Home Page:"), wxDefaultPosition, wxSize(-1, -1), 0);
+    m_staticText13 = new wxStaticText(this, wxID_ANY, _("Copyright (c) 2010-2016"), wxDefaultPosition, wxSize(-1,-1), 0);
+    m_staticText13->SetForegroundColour(wxColour(wxT("rgb(255,255,255)")));
     
-    fgSizer1->Add(m_staticTextHomePage, 1, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+    fgSizer1->Add(m_staticText13, 0, wxALL, 5);
     
-    m_hyperlink1 = new wxHyperlinkCtrl(this, wxID_ANY, _("http://17.baidu.com"), wxT("http://17.baidu.com"), wxDefaultPosition, wxSize(-1, -1), wxHL_DEFAULT_STYLE);
+    m_hyperLink9 = new wxHyperlinkCtrl(this, wxID_ANY, _("rym@zrym.me"), wxT("http://weibo.com/zhizunmingshuai"), wxDefaultPosition, wxSize(-1,-1), wxHL_DEFAULT_STYLE);
+    m_hyperLink9->SetNormalColour(wxColour(wxT("rgb(255,255,255)")));
+    m_hyperLink9->SetHoverColour(wxColour(wxT("rgb(255,255,255)")));
+    m_hyperLink9->SetVisitedColour(wxColour(wxT("rgb(255,255,255)")));
     
-    fgSizer1->Add(m_hyperlink1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    fgSizer1->Add(m_hyperLink9, 0, wxALL, 5);
     
-    m_staticText2 = new wxStaticText(this, wxID_ANY, _("CodeLite Forum:"), wxDefaultPosition, wxSize(-1, -1), 0);
-    
-    fgSizer1->Add(m_staticText2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    
-    m_hyperlink2 = new wxHyperlinkCtrl(this, wxID_ANY, _("http://forums.18.baidu.com"), wxT("http://forums.18.baidu.com"), wxDefaultPosition, wxSize(-1, -1), wxHL_DEFAULT_STYLE);
-    
-    fgSizer1->Add(m_hyperlink2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    
-    m_staticText3 = new wxStaticText(this, wxID_ANY, _("Version:"), wxDefaultPosition, wxSize(-1, -1), 0);
-    
-    fgSizer1->Add(m_staticText3, 0, wxALL|wxALIGN_RIGHT, 5);
-    
-    m_staticTextInformation = new wxStaticText(this, wxID_ANY, wxT(""), wxDefaultPosition, wxSize(-1, -1), 0);
-    
-    fgSizer1->Add(m_staticTextInformation, 0, wxALL, 5);
-    
-    m_bitmapPayPal = new wxStaticBitmap(this, wxID_ANY, wxXmlResource::Get()->LoadBitmap(wxT("paypal")), wxDefaultPosition, wxSize(-1, -1), 0 );
-    
-    fgSizer1->Add(m_bitmapPayPal, 0, wxALL|wxALIGN_RIGHT, 5);
-    
-    m_hyperlink3 = new wxHyperlinkCtrl(this, wxID_ANY, _("Support CodeLite"), wxT("http://18.baidu.com/support.php"), wxDefaultPosition, wxSize(-1, -1), wxHL_DEFAULT_STYLE);
-    
-    fgSizer1->Add(m_hyperlink3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    
-    wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-    
-    mainSizer->Add(buttonSizer, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
-    
-    m_buttonOk = new wxButton(this, wxID_OK, _("&OK"), wxDefaultPosition, wxSize(-1, -1), 0);
-    m_buttonOk->SetDefault();
-    m_buttonOk->SetFocus();
-    
-    buttonSizer->Add(m_buttonOk, 0, wxALL, 5);
-    
-    
-    #if wxVERSION_NUMBER >= 2900
-    if(!wxPersistenceManager::Get().Find(m_notebook1)){
-        wxPersistenceManager::Get().RegisterAndRestore(m_notebook1);
-    } else {
-        wxPersistenceManager::Get().Restore(m_notebook1);
-    }
-    #endif
-    
+    SetBackgroundColour(wxColour(wxT("rgb(64,64,64)")));
+    SetForegroundColour(wxColour(wxT("rgb(64,64,64)")));
     SetName(wxT("AboutDlgBase"));
-    SetSize(-1,-1);
-    if (GetSizer()) {
+    SetSizeHints(-1,-1);
+    if ( GetSizer() ) {
          GetSizer()->Fit(this);
     }
-    if(GetParent()) {
-        CentreOnParent(wxBOTH);
-    } else {
-        CentreOnScreen(wxBOTH);
-    }
+    CentreOnParent(wxBOTH);
 #if wxVERSION_NUMBER >= 2900
     if(!wxPersistenceManager::Get().Find(this)) {
         wxPersistenceManager::Get().RegisterAndRestore(this);
@@ -140,13 +84,8 @@ AboutDlgBase::AboutDlgBase(wxWindow* parent, wxWindowID id, const wxString& titl
         wxPersistenceManager::Get().Restore(this);
     }
 #endif
-    // Connect events
-    m_buttonOk->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(AboutDlgBase::OnOK), NULL, this);
-    
 }
 
 AboutDlgBase::~AboutDlgBase()
 {
-    m_buttonOk->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(AboutDlgBase::OnOK), NULL, this);
-    
 }
