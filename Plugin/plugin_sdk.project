@@ -452,8 +452,6 @@
       <File Name="VirtualDirectorySelectorBase.cpp"/>
       <File Name="plugin_general_wxcp.h"/>
       <File Name="plugin_general_wxcp.cpp"/>
-      <File Name="sftp_ui.h"/>
-      <File Name="sftp_ui.cpp"/>
       <File Name="wxcrafter_plugin.h"/>
       <File Name="wxcrafter_plugin.cpp"/>
       <File Name="wxCodeCompletionBoxBase.h"/>

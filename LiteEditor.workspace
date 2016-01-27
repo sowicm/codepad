@@ -43,9 +43,6 @@
   <Project Name="SpellCheck" Path="SpellChecker/SpellCheck.project" Active="No"/>
   <Project Name="hunspell" Path="SpellChecker/hunspell/hunspell.project" Active="No"/>
   <Project Name="MemCheck" Path="MemCheck/MemCheck.project" Active="No"/>
-  <Project Name="PHPParser" Path="codelitephp/PHPParser/PHPParser.project" Active="No"/>
-  <Project Name="PHPParserUnitTests" Path="codelitephp/PHPParserUnitTests/PHPParserUnitTests.project" Active="No"/>
-  <Project Name="PHPPlugin" Path="codelitephp/php-plugin/PHPPlugin.project" Active="No"/>
   <Project Name="WordCompletion" Path="WordCompletion/WordCompletion.project" Active="No"/>
   <Project Name="WebTools" Path="WebTools/WebTools.project" Active="No"/>
   <Project Name="HelpPlugin" Path="HelpPlugin/HelpPlugin.project" Active="No"/>
@@ -80,9 +77,6 @@
       <Project Name="MemCheck" ConfigName="DebugUnicode"/>
       <Project Name="Outline" ConfigName="Win_x86_Release"/>
       <Project Name="PCH" ConfigName="Release"/>
-      <Project Name="PHPParser" ConfigName="Release"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Release"/>
-      <Project Name="PHPPlugin" ConfigName="Win_x86_Release"/>
       <Project Name="plugin_sdk" ConfigName="Win_x86_Release"/>
       <Project Name="QMakePlugin" ConfigName="Win_x86_Release"/>
       <Project Name="SFTP" ConfigName="Win_x86_Release"/>
@@ -115,9 +109,6 @@
       <Project Name="SFTP" ConfigName="DebugUnicode"/>
       <Project Name="QMakePlugin" ConfigName="Win_x86_Release"/>
       <Project Name="plugin_sdk" ConfigName="Win_x86_Release"/>
-      <Project Name="PHPPlugin" ConfigName="Debug_Unix"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Debug"/>
-      <Project Name="PHPParser" ConfigName="Debug"/>
       <Project Name="PCH" ConfigName="Release"/>
       <Project Name="Outline" ConfigName="WinDebugUnicode"/>
       <Project Name="MemCheck" ConfigName="DebugUnicode"/>
@@ -162,9 +153,6 @@
       <Project Name="SFTP" ConfigName="DebugUnicode"/>
       <Project Name="QMakePlugin" ConfigName="Win_x86_Release"/>
       <Project Name="plugin_sdk" ConfigName="Win_x86_Release"/>
-      <Project Name="PHPPlugin" ConfigName="Debug_Unix"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Debug_Unix"/>
-      <Project Name="PHPParser" ConfigName="Debug_Unix"/>
       <Project Name="PCH" ConfigName="Release"/>
       <Project Name="Outline" ConfigName="Win_x86_Release"/>
       <Project Name="MemCheck" ConfigName="DebugUnicode"/>
@@ -230,9 +218,6 @@
       <Project Name="SpellCheck" ConfigName="DebugUnicode"/>
       <Project Name="hunspell" ConfigName="Debug"/>
       <Project Name="MemCheck" ConfigName="DebugUnicode"/>
-      <Project Name="PHPParser" ConfigName="Debug"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Debug"/>
-      <Project Name="PHPPlugin" ConfigName="Debug_Unix"/>
       <Project Name="WordCompletion" ConfigName="DebugUnicode"/>
       <Project Name="WebTools" ConfigName="DebugUnicode"/>
       <Project Name="HelpPlugin" ConfigName="Win_x64_Debug"/>
@@ -276,9 +261,6 @@
       <Project Name="SpellCheck" ConfigName="DebugUnicode"/>
       <Project Name="hunspell" ConfigName="Debug"/>
       <Project Name="MemCheck" ConfigName="DebugUnicode"/>
-      <Project Name="PHPParser" ConfigName="Debug"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Debug"/>
-      <Project Name="PHPPlugin" ConfigName="Debug_Unix"/>
       <Project Name="WordCompletion" ConfigName="DebugUnicode"/>
       <Project Name="WebTools" ConfigName="DebugUnicode"/>
       <Project Name="HelpPlugin" ConfigName="Win_x64_Debug"/>
@@ -310,9 +292,6 @@
       <Project Name="MemCheck" ConfigName="Win_x64_Release"/>
       <Project Name="Outline" ConfigName="Win_x64_Release"/>
       <Project Name="PCH" ConfigName="Win_x64_Release"/>
-      <Project Name="PHPParser" ConfigName="Win_x64_Release"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Win_x64_Release"/>
-      <Project Name="PHPPlugin" ConfigName="Win_x64_Release"/>
       <Project Name="plugin_sdk" ConfigName="Win_x64_Release"/>
       <Project Name="QMakePlugin" ConfigName="Win_x64_Release"/>
       <Project Name="SFTP" ConfigName="Win_x64_Release"/>
@@ -329,7 +308,7 @@
       <Project Name="wxsqlite3" ConfigName="Win_x64_Release"/>
       <Project Name="ZoomNavigator" ConfigName="Win_x64_Release"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Win_x64_Debug" Selected="no">
+    <WorkspaceConfiguration Name="Win_x64_Debug" Selected="yes">
       <Environment/>
       <Project Name="abbreviation" ConfigName="Win_x64_Debug"/>
       <Project Name="CallGraph" ConfigName="Win_x64_Debug"/>
@@ -355,9 +334,6 @@
       <Project Name="MemCheck" ConfigName="Win_x64_Debug"/>
       <Project Name="Outline" ConfigName="Win_x64_Debug"/>
       <Project Name="PCH" ConfigName="Win_x64_Debug"/>
-      <Project Name="PHPParser" ConfigName="Win_x64_Debug"/>
-      <Project Name="PHPParserUnitTests" ConfigName="Win_x64_Debug"/>
-      <Project Name="PHPPlugin" ConfigName="Win_x64_Debug"/>
       <Project Name="plugin_sdk" ConfigName="Win_x64_Debug"/>
       <Project Name="QMakePlugin" ConfigName="Win_x64_Debug"/>
       <Project Name="SFTP" ConfigName="Win_x64_Debug"/>
