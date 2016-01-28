@@ -181,14 +181,14 @@ macro(OSX_MAKE_BUNDLE_DIRECTORY)
         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config)
         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/config/cppcheck)
         file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/SharedSupport/dics)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/MacOS)
-        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents/MacOS)
+        file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents/Resources)
         
         file(COPY ${CL_SRC_ROOT}/codelite_terminal/icon.icns 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/Resources)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents/Resources)
 
         file(COPY ${CL_SRC_ROOT}/bitmaps/osx/icon.icns 
             DESTINATION 
@@ -202,7 +202,7 @@ macro(OSX_MAKE_BUNDLE_DIRECTORY)
         file(COPY ${CL_SRC_ROOT}/Runtime/Info.plist DESTINATION ${CMAKE_BINARY_DIR}/Codepad.app/Contents)
         file(COPY ${CL_SRC_ROOT}/codelite_terminal/Info.plist 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents)
         
         ## Copy external libraries into the bundle folder
         _FIND_WX_LIBRARIES()

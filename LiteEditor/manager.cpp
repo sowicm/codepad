@@ -1481,7 +1481,7 @@ wxString Manager::GetProjectExecutionCommand(const wxString& projectName, wxStri
     wd = ExpandVariables(wd, GetProject(projectName), clMainFrame::Get()->GetMainBook()->GetActiveEditor());
 
     wxFileName fnCodeliteTerminal(clStandardPaths::Get().GetExecutablePath());
-    fnCodeliteTerminal.SetFullName("codelite-terminal");
+    fnCodeliteTerminal.SetFullName("Codepad-Terminal");
 
     wxString title;
     title << cmd << " " << cmdArgs;
@@ -1495,7 +1495,7 @@ wxString Manager::GetProjectExecutionCommand(const wxString& projectName, wxStri
 
 #if defined(__WXMAC__)
         wxString newCommand;
-        newCommand << "/usr/bin/open " << fnCodeliteTerminal.GetPath(true) << "codelite-terminal.app --args ";
+        newCommand << "/usr/bin/open " << fnCodeliteTerminal.GetPath(true) << "Codepad-Terminal.app --args ";
         newCommand << " --exit ";
         if(bldConf->GetPauseWhenExecEnds()) {
             newCommand << " --wait ";
@@ -1553,7 +1553,7 @@ wxString Manager::GetProjectExecutionCommand(const wxString& projectName, wxStri
         if(!bldConf->IsGUIProgram()) {
             if(bldConf->GetPauseWhenExecEnds() && opts->HasOption(OptionsConfig::Opt_Use_CodeLite_Terminal)) {
 
-                // codelite-terminal does not like forward slashes...
+                // Codepad-Terminal does not like forward slashes...
                 wxString commandToRun;
                 commandToRun << cmd << " ";
                 commandToRun.Replace("/", "\\");
@@ -1762,7 +1762,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
         wxString strWD = m_filename.Mid(0, i);
 
         wxFileName fnCodeliteTerminal(clStandardPaths::Get().GetExecutablePath());
-        fnCodeliteTerminal.SetFullName("codelite-terminal");
+        fnCodeliteTerminal.SetFullName("Codepad-Terminal");
 
         wxString strTerm = fnCodeliteTerminal.GetPath(true);
         strTerm.Replace(" ", "\\ ");
@@ -1775,7 +1775,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
 
 #if defined(__WXMAC__)
         wxString newCommand;
-        newCommand << "/usr/bin/open " << strTerm << "codelite-terminal.app --args ";
+        newCommand << "/usr/bin/open " << strTerm << "Codepad-Terminal.app --args ";
         newCommand << " --exit ";
 //        if(bldConf->GetPauseWhenExecEnds()) {
             newCommand << " --wait ";
@@ -1791,7 +1791,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
 
 #elif defined(__WXMSW__)
 
-        // codelite-terminal does not like forward slashes...
+        // Codepad-Terminal does not like forward slashes...
         wxString commandToRun;
         commandToRun << strExe << " ";
         commandToRun.Replace("/", "\\");

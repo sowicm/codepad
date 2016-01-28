@@ -16016,7 +16016,7 @@ msgid "A terminal emulator designed for codelite IDE"
 msgstr "一个用于 CodeLite 的终端模拟器"
 
 #: codelite_terminal/terminal_options.cpp:6 codelite_terminal/wxcrafter.h:78
-msgid "codelite-terminal"
+msgid "Codepad-Terminal"
 msgstr "CodeLite 终端"
 
 #: codelite_terminal/wxcrafter.cpp:109

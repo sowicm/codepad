@@ -78,7 +78,7 @@
     }, {
      "type": "string",
      "m_label": "Title:",
-     "m_value": "codelite-terminal"
+     "m_value": "Codepad-Terminal"
     }, {
      "type": "virtualFolderPicker",
      "m_label": "Virtual Folder:",

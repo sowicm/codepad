@@ -15515,7 +15515,7 @@ msgid "A terminal emulator designed for codelite IDE"
 msgstr ""
 
 #: codelite_terminal/terminal_options.cpp:6 codelite_terminal/wxcrafter.h:78
-msgid "codelite-terminal"
+msgid "Codepad-Terminal"
 msgstr ""
 
 #: codelite_terminal/wxcrafter.cpp:109

@@ -7,11 +7,11 @@
 MyConfig::MyConfig()
     : wxFileConfig("",
                    "",
-                   (wxStandardPaths::Get().GetUserDataDir() + "/codelite-terminal.ini"),
+                   (wxStandardPaths::Get().GetUserDataDir() + "/Codepad-Terminal.ini"),
                    "",
                    wxCONFIG_USE_LOCAL_FILE)
 {
-    wxFileName fn(wxStandardPaths::Get().GetUserDataDir(), "codelite-terminal.ini");
+    wxFileName fn(wxStandardPaths::Get().GetUserDataDir(), "Codepad-Terminal.ini");
     fn.Mkdir(wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
 }
 

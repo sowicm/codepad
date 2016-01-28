@@ -56,7 +56,7 @@ copy makedir.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy le_exec.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy CodeLite.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy codelite-make.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
-copy codelite-terminal.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
+copy Codepad-Terminal.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy patch.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy rm.exe "%TARGET_DIR%\Sowicm's Codepad\" /Y
 copy astyle.sample "%TARGET_DIR%\Sowicm's Codepad\" /Y

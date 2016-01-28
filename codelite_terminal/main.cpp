@@ -36,7 +36,7 @@ public:
 
     virtual bool OnInit() {
 
-        SetAppName("codelite-terminal");
+        SetAppName("Codepad-Terminal");
 
         CommandLineParser parser(wxApp::argc, wxApp::argv);
         parser.AddOption("t", "title", CommandLineParser::kOptionWithValue|CommandLineParser::kOptional);

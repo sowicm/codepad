@@ -1747,9 +1747,9 @@ IProcess* LaunchTerminal(const wxString& title, bool forDebugger, IProcessCallba
     wxFileName fnCodeliteTerminal(clStandardPaths::Get().GetExecutablePath());
 
 #if defined(__WXMAC__)
-    command << "/usr/bin/open \"" << fnCodeliteTerminal.GetPath(true) << "codelite-terminal.app\" --args ";
+    command << "/usr/bin/open \"" << fnCodeliteTerminal.GetPath(true) << "Codepad-Terminal.app\" --args ";
 #else
-    command << fnCodeliteTerminal.GetPath(true) << "codelite-terminal ";
+    command << fnCodeliteTerminal.GetPath(true) << "Codepad-Terminal ";
 #endif
     // command << " --always-on-top ";
     command << " --print-info ";
@@ -1774,7 +1774,7 @@ wxString MakeExecInShellCommand(const wxString& cmd, const wxString& wd, bool wa
 
     OptionsConfigPtr opts = EditorConfigST::Get()->GetOptions();
     wxFileName fnCodeliteTerminal(clStandardPaths::Get().GetExecutablePath());
-    fnCodeliteTerminal.SetFullName("codelite-terminal");
+    fnCodeliteTerminal.SetFullName("Codepad-Terminal");
 
 // change directory to the working directory
 #if defined(__WXMAC__)
@@ -1823,7 +1823,7 @@ wxString MakeExecInShellCommand(const wxString& cmd, const wxString& wd, bool wa
 
     if(opts->HasOption(OptionsConfig::Opt_Use_CodeLite_Terminal)) {
 
-        // codelite-terminal does not like forward slashes...
+        // Codepad-Terminal does not like forward slashes...
         wxString commandToRun;
         commandToRun << cmd << " ";
         commandToRun.Replace("/", "\\");

@@ -41,7 +41,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "{#CODELITE_ROOT}\Runtime\codelite.exe"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "{#CODELITE_ROOT}\Runtime\codelite-echo.exe"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "{#CODELITE_ROOT}\Runtime\codelite-make.exe"; DestDir: "{app}"; Flags: ignoreversion; 
-Source: "{#CODELITE_ROOT}\Runtime\codelite-terminal.exe"; DestDir: "{app}"; Flags: ignoreversion; 
+Source: "{#CODELITE_ROOT}\Runtime\Codepad-Terminal.exe"; DestDir: "{app}"; Flags: ignoreversion; 
 Source: "{#CODELITE_ROOT}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion; 
 
 ;; ---- wxWidgets DLLs

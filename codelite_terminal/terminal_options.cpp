@@ -3,7 +3,7 @@
 
 TerminalOptions::TerminalOptions()
     : m_flags(0)
-    , m_title(_("codelite-terminal"))
+    , m_title(_("Codepad-Terminal"))
 {
 }
 

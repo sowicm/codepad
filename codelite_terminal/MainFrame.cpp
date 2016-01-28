@@ -52,7 +52,7 @@ static void WrapInShell(wxString& cmd)
 #define MARKER_ID 1
 
 MainFrame::MainFrame(wxWindow* parent, const TerminalOptions& options, long style)
-    : MainFrameBaseClass(parent, wxID_ANY, "codelite-terminal", wxDefaultPosition, wxDefaultSize, style)
+    : MainFrameBaseClass(parent, wxID_ANY, "Codepad-Terminal", wxDefaultPosition, wxDefaultSize, style)
     , m_process(NULL)
     , m_ptyCllback(this)
     , m_fromPos(0)
@@ -90,7 +90,7 @@ MainFrame::~MainFrame()
     m_config.SetFgColour(m_stc->StyleGetForeground(0));
     m_config.Save();
 
-    // Call this so the clipboard is still available after codelite-terminal exits
+    // Call this so the clipboard is still available after Codepad-Terminal exits
     wxTheClipboard->Flush();
 }
 
@@ -104,7 +104,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxUnusedVar(event);
     wxAboutDialogInfo info;
-    info.SetName("codelite-terminal");
+    info.SetName("Codepad-Terminal");
     info.SetCopyright(_("by Eran Ifrah"));
     info.SetLicence(_("GPL v2 or later"));
     info.SetDescription(_("A terminal emulator designed for codelite IDE"));
@@ -414,7 +414,7 @@ void MainFrame::OnSaveContent(wxCommandEvent& event)
     wxFileDialog dlg(this,
                      _("Save As"),
                      ::wxGetCwd(),
-                     "codelite-terminal.txt",
+                     "Codepad-Terminal.txt",
                      ALL,
                      wxFD_SAVE | wxFD_OVERWRITE_PROMPT,
                      wxDefaultPosition);

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6.2)
  
 # Our project is called 'codelite' this is how it will be called in
 # visual studio, and in our makefiles. 
-project(codelite-terminal)
+project(Codepad-Terminal)
 
 if ( UNIX OR MINGW AND NOT APPLE )
     find_package(wxWidgets COMPONENTS std stc aui REQUIRED)
@@ -34,23 +34,23 @@ set (RES_FILE "")
 if (MINGW)
     set (RES_FILE "win_resources.rc")
 endif()
-add_executable(codelite-terminal ${SRCS} ${RES_FILE})
+add_executable(Codepad-Terminal ${SRCS} ${RES_FILE})
 
 set ( UTIL_LIB "" )
 if ( UNIX )
     set( UTIL_LIB "-lutil")
 endif ( UNIX )
 
-target_link_libraries(codelite-terminal ${LINKER_OPTIONS} ${wxWidgets_LIBRARIES} ${UTIL_LIB} )
+target_link_libraries(Codepad-Terminal ${LINKER_OPTIONS} ${wxWidgets_LIBRARIES} ${UTIL_LIB} )
 
 if(APPLE)
-    install(TARGETS codelite-terminal 
+    install(TARGETS Codepad-Terminal 
             DESTINATION 
-            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/MacOS)
+            ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents/MacOS)
     # @executable_path/../../../
     CL_INSTALL_NAME_TOOL_EX("libwx_" "@executable_path/../../../" 
-                ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/codelite-terminal.app/Contents/MacOS/codelite-terminal)
+                ${CMAKE_BINARY_DIR}/Codepad.app/Contents/MacOS/Codepad-Terminal.app/Contents/MacOS/Codepad-Terminal)
 else()
-    install(TARGETS codelite-terminal DESTINATION ${CL_PREFIX}/bin)
+    install(TARGETS Codepad-Terminal DESTINATION ${CL_PREFIX}/bin)
 endif()
-add_dependencies(codelite-terminal plugin)
+add_dependencies(Codepad-Terminal plugin)
