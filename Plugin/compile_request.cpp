@@ -115,7 +115,7 @@ void CompileRequest::Process(IManager* manager)
         //cmd = ExpandAllVariables(cmd, w, m_info.GetProject(), m_info.GetConfiguration(), m_fileName);
 */
         // print the build command
-        //AppendLine(cmd + wxT("\n"));
+        AppendLine(cmd + wxT("\n"));
 
         // Avoid Unicode chars coming from the compiler by setting LC_ALL to "C"
 //        om["LC_ALL"] = "C";
