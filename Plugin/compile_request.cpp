@@ -104,7 +104,11 @@ void CompileRequest::Process(IManager* manager)
         strExe += _T(".exe");
 #endif
 
-        cmd = _("gcc \"") + m_fileName + _T("\" -o \"" ) + strExe + _T("\"");
+        CompilerPtr cmp = BuildSettingsConfigST::Get()->GetCompiler("gnu gcc");
+
+
+        cmd = cmp->GetTool(wxT("CXX")) + _T(" \"") + m_fileName + _T("\" -o \"" ) + strExe + _T("\"");
+
 /*
         WrapInShell(cmd);
         DirSaver ds;
