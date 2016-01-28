@@ -39,9 +39,13 @@ void CommandLineParser::DoParse()
             // Stop parsing, from this point on, everything is the command to execute
             while ( HasMore() ) {
                 wxString cmdToken = NextToken();
-                if ( cmdToken.Contains(" ") ) {
-                    cmdToken.Prepend("\"").Append("\"");
-                }
+                //if ( cmdToken.Contains(" ") ) {
+                //    cmdToken.Prepend("\"").Append("\"");
+                //}
+
+                cmdToken.Replace(" ", "\\ ");
+                cmdToken.Replace("'", "\\'");
+
                 m_command << cmdToken << " ";
             }
             break;

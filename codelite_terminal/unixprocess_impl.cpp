@@ -157,6 +157,7 @@ char **buildargv (const char *input)
                         *arg++ = *input;
                     } else if (*input == '\\') {
                         bsquote = 1;
+                        *arg++ = *input;
                     } else if (squote) {
                         if (*input == '\'') {
                             squote = 0;

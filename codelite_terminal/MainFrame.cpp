@@ -42,10 +42,11 @@ static void WrapInShell(wxString& cmd)
     command << cmd << wxT("\"");
     cmd = command;
 #else
-    command << wxT("/bin/sh -c '");
-    command << cmd << wxT("'");
+    command << wxT("/bin/sh -c \"");
+    command << cmd << wxT("\"");
     cmd = command;
-#endif
+#endif                
+
 }
 
 #define MARKER_ID 1
