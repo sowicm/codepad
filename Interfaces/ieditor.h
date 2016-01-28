@@ -145,6 +145,8 @@ public:
      */
     virtual long GetCurrentPosition() = 0;
 
+    virtual bool untitled() const = 0;
+
     /**
      * \brief return the current file name
      */

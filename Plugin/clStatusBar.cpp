@@ -104,11 +104,19 @@ void clStatusBar::OnPageChanged(wxCommandEvent& event)
     // Update the file name
     IEditor* editor = m_mgr->GetActiveEditor();
     // update the language
-    wxString language = "TEXT";
+    wxString language = "Plain Text";
     if(editor) {
-        LexerConf::Ptr_t lexer = ColoursAndFontsManager::Get().GetLexerForFile(editor->GetFileName().GetFullPath());
+        LexerConf::Ptr_t lexer;
+        if (editor->untitled())
+        {
+            lexer = ColoursAndFontsManager::Get().GetLexerForBuffer(editor->GetCtrl()->GetText());
+        }
+        else
+        {
+            lexer = ColoursAndFontsManager::Get().GetLexerForFile(editor->GetFileName().GetFullPath());
+        }
         if(lexer) {
-            language = lexer->GetName().Upper();
+            language = lexer->GetName().Capitalize();
         }
         // Set the "TABS/SPACES" field
         wxString indent = editor->GetCtrl()->GetUseTabs() ? "tabs" : "spaces";
@@ -152,7 +160,9 @@ void clStatusBar::SetLanguage(const wxString& lang)
     wxCustomStatusBarField::Ptr_t field = GetField(STATUSBAR_LANG_COL_IDX);
     CHECK_PTR_RET(field);
 
-    wxString ucLang = lang.Upper();
+    wxString ucLang = lang.Capitalize();
+    if (ucLang == "Text")
+        ucLang = "Plain Text";
     field->Cast<wxCustomStatusBarFieldText>()->SetText(ucLang);
     field->SetTooltip(lang);
 }

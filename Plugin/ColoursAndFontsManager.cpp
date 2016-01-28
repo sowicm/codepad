@@ -449,6 +449,51 @@ LexerConf::Ptr_t ColoursAndFontsManager::GetLexerForFile(const wxString& filenam
     }
 }
 
+LexerConf::Ptr_t ColoursAndFontsManager::GetLexerForBuffer(const wxString& buffer) const
+{
+    // Try this:
+    // Use the FileExtManager to get the file type by examinig its content
+    LexerConf::Ptr_t lexerByContent; // Null by default
+    FileExtManager::FileType fileType = FileExtManager::TypeOther;
+    if(FileExtManager::AutoDetectByBuffer(buffer, fileType) && fileType != FileExtManager::TypeOther) {
+        switch(fileType) {
+        case FileExtManager::TypeScript:
+            lexerByContent = GetLexer("script");
+            break;
+        case FileExtManager::TypePhp:
+            lexerByContent = GetLexer("php");
+            break;
+        case FileExtManager::TypeSourceCpp:
+            lexerByContent = GetLexer("c++");
+            break;
+        case FileExtManager::TypeXml:
+            lexerByContent = GetLexer("xml");
+            break;
+        case FileExtManager::TypePython:
+            lexerByContent = GetLexer("python");
+            break;
+        default:
+            break;
+        }
+    }
+
+    // If we managed to find a lexer by content, use it
+    if(lexerByContent) return lexerByContent;
+
+    if (buffer.Contains("#include"))
+    {
+        return GetLexer("c++");
+    }
+    else if (buffer.Contains("import "))
+    {
+        return GetLexer("python");
+    }
+    else
+    {
+        return GetLexer("text");
+    }
+}
+
 void ColoursAndFontsManager::Reload()
 {
     Clear();

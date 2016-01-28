@@ -1033,6 +1033,8 @@ void LEditor::OnCharAdded(wxStyledTextEvent& event)
                 ClearDocumentStyle();
                 m_context = ContextManager::Get()->NewContextByBuffer(this, GetText());
 
+                clMainFrame::Get()->GetStatusBar()->SetLanguage( EditorConfigST::Get()->GetLexerForBuffer(GetText())->GetName() );
+
                 SetProperties();
 
                 m_context->SetActive();

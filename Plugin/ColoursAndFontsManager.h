@@ -152,6 +152,11 @@ public:
     LexerConf::Ptr_t GetLexerForFile(const wxString& filename) const;
 
     /**
+     * @brief return lexer for a buffer
+     */
+    LexerConf::Ptr_t GetLexerForBuffer(const wxString& buffer) const;
+
+    /**
      * @brief restore the default colours
      * This is done by deleting the user defined XML files and
      */

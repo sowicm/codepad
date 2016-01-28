@@ -231,6 +231,23 @@ bool FileExtManager::AutoDetectByContent(const wxString& filename, FileExtManage
     return false;
 }
 
+bool FileExtManager::AutoDetectByBuffer(const wxString& buffer, FileExtManager::FileType& fileType)
+{
+    wxString fileContent = buffer;
+    // Use only the first 4K bytes from the input file (tested with default STL headers)
+    if(fileContent.length() > 4096) {
+        fileContent.Truncate(4096);
+    }
+
+    for(size_t i = 0; i < m_matchers.size(); ++i) {
+        if(m_matchers.at(i)->Matches(fileContent)) {
+            fileType = m_matchers.at(i)->m_fileType;
+            return true;
+        }
+    }
+    return false;
+}
+
 bool FileExtManager::IsJavaFile(const wxString& filename)
 {
     FileType ft = GetType(filename);

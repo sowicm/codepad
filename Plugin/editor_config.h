@@ -154,6 +154,13 @@ public:
     LexerConf::Ptr_t GetLexerForFile(const wxString& filename);
 
     /**
+     * @brief return the proper lexer based on the buffer
+     * @param buffer
+     * @return the file's lexer or the "Text" lexer
+     */
+    LexerConf::Ptr_t GetLexerForBuffer(const wxString& buffer);
+
+    /**
      * Get the outputview's foreground colour, which is global to a theme
      * \return the colour as a wxString
      */

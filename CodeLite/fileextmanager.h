@@ -143,6 +143,11 @@ public:
      * @brief attempt to autodetect the file type by examining its content
      */
     static bool AutoDetectByContent(const wxString& filename, FileExtManager::FileType& fileType);
+
+    /**
+     * @brief attempt to autodetect the file type by examining its content
+     */
+    static bool AutoDetectByBuffer(const wxString& buffer, FileExtManager::FileType& fileType);
 };
 
 #endif // __fileextmanager__
