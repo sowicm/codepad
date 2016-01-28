@@ -1751,7 +1751,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
     {
         int i = m_filename.Find('.', true);
         wxString strExe = (i < 0 ? m_filename : m_filename.Mid(0, i))
-#if IS_WINDOWS
+#if defined(__WXMSW__)
         + _T(".exe")
 #endif
         ;

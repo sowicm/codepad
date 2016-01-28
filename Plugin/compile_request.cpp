@@ -100,7 +100,7 @@ void CompileRequest::Process(IManager* manager)
 
         int i = m_fileName.Find('.', true);
         wxString strExe = (i < 0 ? m_fileName : m_fileName.Mid(0, i));
-#if IS_WINDOWS
+#if defined(__WXMSW__)
         strExe += _T(".exe");
 #endif
 
