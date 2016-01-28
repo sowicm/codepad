@@ -347,6 +347,7 @@ void MainBook::RestoreSession(SessionEntry& session)
         {
             editor->untitled(true);
             editor->SetFileName(wxString(_("untitled")));
+            editor->SetSyntaxHighlight(EditorConfigST::Get()->GetLexerForBuffer(ti.contents())->GetName());
         }
 
         editor->SetFirstVisibleLine(ti.GetFirstVisibleLine());
