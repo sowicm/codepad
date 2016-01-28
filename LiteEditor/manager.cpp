@@ -1756,9 +1756,107 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
 #endif
         ;
 
+        i = m_filename.Find('/', true);
+        int j = m_filename.Find('\\', true);
+        i = (i > j ? i : j);
+        wxString strWD = m_filename.Mid(0, i);
+
+        wxFileName fnCodeliteTerminal(clStandardPaths::Get().GetExecutablePath());
+        fnCodeliteTerminal.SetFullName("codelite-terminal");
+
+        wxString strTerm = fnCodeliteTerminal.GetPath(true);
+        strTerm.Replace(" ", "\\ ");
+        strWD.Replace(" ", "\\ ");
+        strExe.Replace(" ", "\\ ");
+
+        strTerm.Replace("'", "\\'");
+        strWD.Replace("'", "\\'");
+        strExe.Replace("'", "\\'");
+
+#if defined(__WXMAC__)
+        wxString newCommand;
+        newCommand << "/usr/bin/open " << strTerm << "codelite-terminal.app --args ";
+        newCommand << " --exit ";
+//        if(bldConf->GetPauseWhenExecEnds()) {
+            newCommand << " --wait ";
+//        }
+
+        //wxFileName fnWD = wxFileName::DirName(m_filename);//, "");
+        //if(fnWD.IsRelative()) {
+        //    fnWD.MakeAbsolute(GetProject(projectName)->GetFileName().GetPath());
+        //}
+        newCommand << " --working-directory " << strWD << " --title " << strExe << " --cmd "
+                   << strExe;
+        execLine = newCommand;
+
+#elif defined(__WXGTK__)
+
+        // Set a console to the execute target
+        if(opts->HasOption(OptionsConfig::Opt_Use_CodeLite_Terminal) && !bldConf->IsGUIProgram()) {
+            wxString newCommand;
+            newCommand << fnCodeliteTerminal.GetFullPath() << " --exit ";
+            if(bldConf->GetPauseWhenExecEnds()) {
+                newCommand << " --wait ";
+            }
+            newCommand << " --cmd " << title;
+            execLine = newCommand;
+
+        } else if(bldConf->IsGUIProgram()) {
+            // do nothing run the command as-is
+
+        } else {
+            wxString term;
+            term = opts->GetProgramConsoleCommand();
+            term.Replace(wxT("$(TITLE)"), title);
+
+            // build the command
+            wxString command;
+            if(bldConf->GetPauseWhenExecEnds()) {
+                wxString ld_lib_path;
+                wxFileName exePath(clStandardPaths::Get().GetExecutablePath());
+                wxFileName exeWrapper(exePath.GetPath(), wxT("codelite_exec"));
+
+                if(wxGetEnv(wxT("LD_LIBRARY_PATH"), &ld_lib_path) && ld_lib_path.IsEmpty() == false) {
+                    command << wxT("/bin/sh -f ") << exeWrapper.GetFullPath() << wxT(" LD_LIBRARY_PATH=") << ld_lib_path
+                            << wxT(" ");
+                } else {
+                    command << wxT("/bin/sh -f ") << exeWrapper.GetFullPath() << wxT(" ");
+                }
+            }
+
+            command << execLine;
+            term.Replace(wxT("$(CMD)"), command);
+            execLine = term;
+        }
+#elif defined(__WXMSW__)
+
+        if(!bldConf->IsGUIProgram()) {
+            if(bldConf->GetPauseWhenExecEnds() && opts->HasOption(OptionsConfig::Opt_Use_CodeLite_Terminal)) {
+
+                // codelite-terminal does not like forward slashes...
+                wxString commandToRun;
+                commandToRun << cmd << " ";
+                commandToRun.Replace("/", "\\");
+                commandToRun << cmdArgs;
+                commandToRun.Trim().Trim(false);
+
+                wxString newCommand;
+                newCommand << fnCodeliteTerminal.GetFullPath() << " --exit ";
+                if(bldConf->GetPauseWhenExecEnds()) {
+                    newCommand << " --wait ";
+                }
+
+                newCommand << " --cmd " << commandToRun;
+                execLine = newCommand;
+            } else if(bldConf->GetPauseWhenExecEnds()) {
+                execLine.Prepend("le_exec.exe ");
+            }
+        }
+#endif
+
         m_asyncExeCmd = new AsyncExeCmd(clMainFrame::Get()->GetOutputPane()->GetBuildTab());
 
-        execLine = strExe;
+        //execLine = strExe;
         m_asyncExeCmd->Execute(execLine, false, false);
 
 
