@@ -67,6 +67,8 @@ os_name=`uname -s`
     cp ../bitmaps/512-${filename}@2x.png ../bitmaps/osx/icon.iconset/icon_512x512@2x.png
 #fi
 
+png2ico ../LiteEditor/res/codepad-logo.ico ../bitmaps/16-${filename}.png ../bitmaps/24-${filename}.png ../bitmaps/32-${filename}.png ../bitmaps/64-${filename}.png ../bitmaps/128-${filename}.png #../bitmaps/256-${filename}.png
+
 cd ../bitmaps
 
 ##
