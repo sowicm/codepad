@@ -303,12 +303,38 @@ void MainBook::RestoreSession(SessionEntry& session)
     for(size_t i = 0; i < vTabInfoArr.size(); i++) {
         const TabInfo& ti = vTabInfoArr[i];
         m_reloadingDoRaise = (i == vTabInfoArr.size() - 1); // Raise() when opening only the last editor
-        const wxString* buffer = NULL;
-        //if (ti.unsaved())
-        //{
-        //    buffer = &(ti.contents());
-        //}
-        LEditor* editor = OpenFile(ti.GetFileName(), buffer);
+
+
+        if (ti.GetFileName().Length() < 1 && ti.contents().Length() < 1)
+        {
+            wxString fileNameStr(_("untitled"));
+            wxFileName fileName(fileNameStr);
+
+            // A Nice trick: hide the notebook, open the editor
+            // and then show it
+//            bool hidden(false);
+//            if(m_book->GetPageCount() == 0) hidden = GetSizer()->Hide(m_book);
+
+            LEditor* editor = new LEditor(m_book);
+            editor->SetFileName(fileName);
+            editor->untitled(true);
+            AddPage(editor, fileName.GetFullName(), fileName.GetFullPath(), wxNullBitmap, true);
+
+#ifdef __WXMAC__
+            m_book->GetSizer()->Layout();
+#endif
+
+            // SHow the notebook
+//            if(hidden) GetSizer()->Show(m_book);
+
+//            editor->SetActive();
+//            return editor;
+
+            continue;
+        }
+
+
+        LEditor* editor = OpenFile(ti.GetFileName());
         if(!editor) {
             if(i < sel) {
                 // have to adjust selected tab number because couldn't open tab
