@@ -1791,6 +1791,7 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
 
 #elif defined(__WXMSW__)
 
+#if 0
         // Codepad-Terminal does not like forward slashes...
         wxString commandToRun;
         commandToRun << strExe << " ";
@@ -1807,6 +1808,8 @@ void Manager::ExecuteNoDebug(const wxString& projectName)
         newCommand << " --cmd " << commandToRun;
         execLine = newCommand;
         execLine.Prepend("le_exec.exe ");
+#endif
+        execLine = wxT("le_exec.exe ") + strExe;
 #endif
 
         m_asyncExeCmd = new AsyncExeCmd(clMainFrame::Get()->GetOutputPane()->GetBuildTab());
