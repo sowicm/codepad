@@ -295,7 +295,11 @@ void MainBook::SaveSession(SessionEntry& session, wxArrayInt* excludeArr) { Crea
 
 void MainBook::RestoreSession(SessionEntry& session)
 {
-    if(session.GetTabInfoArr().empty()) return; // nothing to restore
+    if(session.GetTabInfoArr().empty())
+    {
+        NewEditor();
+        return;
+    }
 
     CloseAll(false);
     size_t sel = session.GetSelectedTab();

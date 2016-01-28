@@ -1740,6 +1740,10 @@ void clMainFrame::Bootstrap()
         wxCommandEvent loadSessionEvent(wxEVT_LOAD_SESSION);
         EventNotifier::Get()->AddPendingEvent(loadSessionEvent);
     }
+    else
+    {
+    	GetMainBook()->NewEditor();
+    }
 }
 
 void clMainFrame::UpdateBuildTools() {}
@@ -1969,6 +1973,10 @@ void clMainFrame::LoadSession(const wxString& sessionName)
             // no workspace to open, so just restore any previously open editors
             GetMainBook()->RestoreSession(session);
         }
+    }
+    else
+    {
+    	GetMainBook()->NewEditor();
     }
 }
 
