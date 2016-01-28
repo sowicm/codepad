@@ -2882,7 +2882,7 @@ void clMainFrame::OnExecuteNoDebug(wxCommandEvent& event)
 
     		if (editor->untitled())
     		{
-    			wxFileName tmpFileName = wxFileName(clStandardPaths::Get().GetUserDataDir(), ".tmpbuild.c");
+    			wxFileName tmpFileName = wxFileName(wxFileName::GetTempDir(), "codepad_tmp_build.c");
         		//sessionFileName.AppendDir("tmp");
         		wxFFile fp(tmpFileName.GetFullPath(), wxT("wb"));
 			    if (!fp.IsOpened())
@@ -2902,9 +2902,9 @@ void clMainFrame::OnExecuteNoDebug(wxCommandEvent& event)
 	        ManagerST::Get()->PushQueueCommand(buildCommand);
 	        commandExecute.SetCheckBuildSuccess(true); // execute only if build was successfull
 	        ManagerST::Get()->PushQueueCommand(commandExecute);
+//	        ManagerST::Get()->ProcessCommandQueue();
 	        ManagerST::Get()->ProcessCommandQueue();
-	        ManagerST::Get()->ProcessCommandQueue();
-	        ManagerST::Get()->filename(wxEmptyString);
+	        //ManagerST::Get()->filename(wxEmptyString);
     	}
     	catch (char* str)
     	{
