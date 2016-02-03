@@ -198,7 +198,13 @@ if(NOT APPLE)
         if (${WX_LIBSOUTPUT} MATCHES "^-L.+") # In recent, multi-architecture, distro versions it'll start with -L/foo/bar
             string(REGEX REPLACE "^-L([^ ;]+).*" "\\1" WX_LIBS_DIR ${WX_LIBSOUTPUT})
         else()
-            set(WX_LIBS_DIR "/usr/lib") # ${WX_LIBS_DIR} will be empty for older, non multi-architecture, distro versions that still use /usr/lib
+			# In recent fedoras, which do things with wx-config that might politely be described as 'strange,  wx-config doesn't emit -L/usr/lib64
+			find_file( USRLIBSIXTYFOUR "libwx_baseu-3.1.so" "/usr/lib64" )
+			if ( NOT USRLIBSIXTYFOUR MATCHES ".*NOTFOUND" )
+				set(WX_LIBS_DIR "/usr/lib64")
+			else()
+				set(WX_LIBS_DIR "/usr/lib") # ${WX_LIBS_DIR} will be empty for older, non multi-architecture, distro versions that still use /usr/lib
+			endif()
         endif()
         message("-- wxlibsdir is: ${WX_LIBS_DIR}")
 
@@ -210,9 +216,9 @@ if(NOT APPLE)
             # We want to replace -l with lib. We also want to exclude imaginary libs called _all.so, which buggy wx-config scripts can invent
             if (${ITEM} MATCHES "-lwx_.+" AND NOT ${ITEM} MATCHES "-l.+_all.+")
                 string(REGEX REPLACE "^-l" "lib" LIBITEM ${ITEM}) 
-                # openSUSE have started to use libwx_gtk2u_xrc-suse.so instead of libwx_gtk2u_xrc-3.1, so chop off the end
-                string(REGEX REPLACE "-.+" "-" LIBITEMCUT ${LIBITEM})
-                list(APPEND WX_LIBS_ALL ${WX_LIBS_DIR}/${LIBITEMCUT}*.so*) # we need the terminal [.]so because the rpms contain both dynamic and static libs
+                # openSUSE have started to use libwx_gtk2u_xrc-suse.so instead of libwx_gtk2u_xrc-3.1, so allow for extra text there
+                string(REGEX REPLACE "(libwx_[a-z0-9_]+-)(.+)" "\\1*\\2" LIBITEMADJ ${LIBITEM})
+                list(APPEND WX_LIBS_ALL ${WX_LIBS_DIR}/${LIBITEMADJ}*.so*) # we need the terminal [.]so because the rpms contain both dynamic and static libs
             endif()
         endforeach()
 
